@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css files -->
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <h1>NeverNote</h1>
+
+    <button id="viewVocab">View Vocab</button>
+    <button id="createNotebook">Create Notebook</button>
+    <button id="downloadNotebook">Download Notebook</button>
+    
+    <!-- create Notebook section -->
+    <div id="createNotebookDiv" style="display: none;">
+        <form id="createNotebookForm">
+            <label for="create Notebook">Notebook Name</label>
+            <input type="text" id="notebookName" name="notebookName" required>
+            <button type="submit">Create</button>
+        </form>
+    </div>
+
+
+
+    <!-- js files -->
+    <script src="./../script/jquery.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

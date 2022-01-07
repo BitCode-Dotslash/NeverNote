@@ -3,6 +3,9 @@
     "description": "A Google Chrome extension!",
     "version": "1.0",
     "manifest_version": 3,
+    "permissions": [
+      "storage"
+    ],
     "icons": {
       "48": "/images/icon.png",
       "128": "/images/icon.png"
@@ -21,6 +24,6 @@
       }
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "/src/background.js"
     }
   }

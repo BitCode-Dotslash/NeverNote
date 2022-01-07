@@ -10,11 +10,11 @@
     "content_scripts": [
       {
         "matches": ["https://*/*"],
-        "js":["jquery.min.js","content.js"]
+        "js":["/src/script/jquery.min.js","/src/script/content.js"]
       }
     ],
     "action": {
-      "default_popup": "popup.html",
+      "default_popup": "/src/popup/popup.html",
       "default_icon": {
       "48": "/images/icon.png",
       "128": "/images/icon.png"

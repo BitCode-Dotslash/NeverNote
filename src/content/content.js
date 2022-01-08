@@ -1,5 +1,11 @@
 console.log("Content Script at Work");
 
+// var automate;
+
+// chrome.storage.sync.get(["automate"], function (result) {
+//   automate = result.automate;
+// });
+
 //function to create extension container to display
 async function createExtensionContainer() {
     //create container

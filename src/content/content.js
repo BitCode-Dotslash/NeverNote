@@ -48,25 +48,38 @@ function translateButtonActivity(text) {
     $("#extension #meaningDiv").css("display", "none");
   });
 
-  $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
-    function (event) {
-      event.preventDefault();
+  $(
+    "#extension #translateDiv #selectLanguage #languageSelectionForm #translateTextSubmit"
+  ).on("click", function (event) {
+    event.preventDefault();
 
-      var translateFrom = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
-      ).val();
+    var translateFrom = $(
+      "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
+    ).val();
 
-      var translateTo = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
-      ).val();
+    var translateTo = $(
+      "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
+    ).val();
 
+    if (translateTo !== "")
       callTranslateAPI(translateFrom, translateTo, text).then(
         (translatedText) => {
-          $("#extension #translateDiv #translatedText").html(translatedText);
+          $("#extension #translateDiv #translatedText").html(
+            `Translated Text : ${translatedText}`
+          );
         }
       );
+    else {
+      alert("Select valid language");
     }
-  );
+  });
+}
+
+//function to enable text to speech on click speech button
+function speechButtonActivity(text) {
+  $("#extension #speechButton").on("click", async function () {
+    textToSpeechAPI(text);
+  });
 }
 
 //function to display meaning, antonym, synonym, and example of given word

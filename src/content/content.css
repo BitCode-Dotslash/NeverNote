@@ -10,7 +10,6 @@
     min-width: 20%;
     opacity: 0.9;
     border-radius: 5px;
-
     box-shadow: #79794b 0px 0px 10px;
 }
 
@@ -18,7 +17,8 @@
     z-index: 100;
     border-radius: 5px;
     background-color: #eaebd1;
-    max-height: 40vh;
+
+    border: 1px solid black;
     width: 100%;
 }
 
@@ -77,6 +77,18 @@ img {
 }
 
 .translate-box {
+    margin-top: 2vh;
+    width: 100%;
+}
+
+.translate-box-language,
+.translate-box-form {
     display: flex;
-    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.translated-text {
+    max-height: 20vh;
+    overflow: scroll;
 }

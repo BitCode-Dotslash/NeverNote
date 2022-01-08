@@ -124,6 +124,7 @@ function saveToNotes(text) {
                 console.log(notes);
                 
                 chrome.storage.sync.set({ notes: notes });
+                $("#extension #addToNotesDiv").css("display", "none");
             });
         }else{
             alert("Select valid title");

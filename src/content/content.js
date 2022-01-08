@@ -54,5 +54,17 @@ $(document).mouseup(async function (event) {
   });
   
 
+//remove extension container when user clicks outside the div
+$(document).mousedown(function(event) 
+{
+      var container = $("#extensionContainer");
+  
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(event.target) && container.has(event.target).length === 0) 
+      {
+          container.remove();
+      }
+  });
+  
   
   

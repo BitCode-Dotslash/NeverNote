@@ -92,3 +92,13 @@ img {
     max-height: 20vh;
     overflow: scroll;
 }
+
+select {
+    background-color: #eeeee6;
+}
+
+.datalist-div {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}

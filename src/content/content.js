@@ -76,6 +76,44 @@ function speechButtonActivity(text) {
     });
 }
 
+function addToNotesButtonActivity(text) {
+    $("#extension #addToNotes").on("click", function () {
+        console.log("Fetched");
+        var container = $("#extension #addToNotesDiv #noteslist");
+        chrome.storage.sync.get(["notes"], function (result) {
+            var notes = Object.keys(result.notes);
+
+            notes.forEach((notebook) => {
+                container.append(new Option(notebook, notebook));
+            });
+
+            $("#extension #addToNotesDiv").css("display", "block");
+        });
+    });
+}
+
+function saveToNotes(text) {
+    $("#extension #addToNotesDiv #notesSelectionForm").submit(function (event) {
+        event.preventDefault();
+        var selectedNotebook = $(
+            "#extension #addToNotesDiv #notesSelectionForm #select_note"
+        ).val();
+        console.log(selectedNotebook);
+        chrome.storage.sync.get(["notes"], function (result) {
+            var notes = result.notes;
+            console.log(notes);
+            var notebookContent = notes[selectedNotebook];
+            console.log(typeof notebookContent);
+            console.log(notebookContent);
+            notebookContent.push(text);
+            console.log(notebookContent);
+            notes[selectedNotebook] = notebookContent;
+            console.log(notes);
+            chrome.storage.sync.set({ notes: notes });
+        });
+    });
+}
+
 //function to display meaning, antonym, synonym, and example of given word
 async function displayMeaning(word) {
     var meaning = callMeaningAPI(word);
@@ -133,7 +171,8 @@ $(document).mouseup(async function (event) {
                 translateButtonActivity(selectedText);
                 meaningButtonActivity(selectedText);
                 speechButtonActivity(selectedText);
-
+                addToNotesButtonActivity(selectedText);
+                saveToNotes(selectedText);
                 $("#extension #selectedText").html(selectedText);
                 console.log($("#extension"));
             })

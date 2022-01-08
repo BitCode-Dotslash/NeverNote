@@ -27,3 +27,17 @@ $("#createNotebookDiv input#notebookName").keyup(function(){
         }
     })
 });
+
+
+//create notebook form submit event
+$("#createNotebookDiv #createNotebookForm").submit(function(event){
+    event.preventDefault();
+    var newNotebook = $("#createNotebookDiv input#notebookName").val();
+    $(this).closest('form').find("input[type=text], textarea").val("");
+    $("#createNotebookDiv").css("display", "none");
+    chrome.storage.sync.get(['notes'], function(result){
+        var notes = result.notes;
+        notes[newNotebook] = [];
+        chrome.storage.sync.set({notes: notes});
+    })
+})

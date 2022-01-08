@@ -100,7 +100,7 @@ img {
 
 .translated-text {
     max-height: 20vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .child-dialog {

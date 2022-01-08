@@ -33,8 +33,8 @@ async function createExtensionContainer() {
 //function to display search Dictionary button or not
 function displaySearchDictionaryButton(isWord) {
     if (isWord) {
-        $("#extension #meaningButton").css("display", "block");
         $("#selectedText").addClass("single-word");
+        $("#extension #meaningButton").css("display", "block");
     } else {
         $("#extension #meaningButton").css("display", "none");
         $("#selectedText").removeClass("single-word");
@@ -45,7 +45,12 @@ function displaySearchDictionaryButton(isWord) {
 function translateButtonActivity(text) {
     $("#extension #translateTextButton").on("click", function () {
         $("#extension #translateDiv").css("display", "block");
+        $("#extension #addToNotesDiv").css("display", "none");
         $("#extension #meaningDiv").css("display", "none");
+        $("#translateTextButton").addClass("active child-dialog");
+        $("#meaningButton").removeClass("active child-dialog");
+        $("#speechButton").removeClass("active child-dialog");
+        $("#addToNotes").removeClass("active child-dialog");
     });
 
     $(
@@ -77,6 +82,10 @@ function translateButtonActivity(text) {
 
 //function to enable text to speech on click speech button
 function speechButtonActivity(text) {
+    $("#translateTextButton").removeClass("active child-dialog");
+    $("#meaningButton").removeClass("active child-dialog");
+    $("#addToNotes").removeClass("active child-dialog");
+    $("#speechButton").addClass("active child-dialog");
     $("#extension #speechButton").on("click", async function () {
         textToSpeechAPI(text);
     });
@@ -84,8 +93,15 @@ function speechButtonActivity(text) {
 
 function addToNotesButtonActivity(text) {
     $("#extension #addToNotes").on("click", function () {
+        $("#extension #translateDiv").css("display", "none");
+        $("#extension #addToNotesDiv").css("display", "block");
+        $("#extension #meaningDiv").css("display", "none");
         console.log("Fetched");
         var container = $("#extension #addToNotesDiv #noteslist");
+        $("#translateTextButton").removeClass("active child-dialog");
+        $("#meaningButton").removeClass("active child-dialog");
+        $("#addToNotes").addClass("active child-dialog");
+        $("#speechButton").removeClass("active child-dialog");
         chrome.storage.sync.get(["notes"], function (result) {
             var notes = Object.keys(result.notes);
 
@@ -122,75 +138,110 @@ function saveToNotes(text) {
 
 //function to display meaning, antonym, synonym, and example of given word
 async function displayMeaning(word) {
-    callMeaningAPI(word).then((meaning) => {
-        var meaningDiv = document.createElement("div");
-        console.log(meaning.word);
-        if(meaning.word){
-            $("#extension #meaningDiv #meaningNotFound").css("display", "none");
-            $("#extension #meaningDiv #meaningFound").css("display", "block");
-            $("#extension #meaningDiv #selectedWord").text(meaning.word);
+    $("#extension #translateDiv").css("display", "none");
+    $("#extension #addToNotesDiv").css("display", "none");
+    $("#extension #meaningDiv").css("display", "block");
+    $("#translateTextButton").removeClass("active child-dialog");
+    $("#speechButton").removeClass("active child-dialog");
+    $("#meaningButton").addClass("active child-dialog");
+    $("#addToNotes").removeClass("active child-dialog");
+    callMeaningAPI(word)
+        .then((meaning) => {
+            var meaningDiv = document.createElement("div");
+            console.log(meaning.word);
+            if (meaning.word) {
+                $("#extension #meaningDiv #meaningNotFound").css(
+                    "display",
+                    "none"
+                );
+                $("#extension #meaningDiv #meaningFound").css(
+                    "display",
+                    "block"
+                );
 
-            var currentWord = {
-                "word": meaning.word ,
-                "meanings": []
-            }
+                let container = document.createElement("div");
 
+                container.innerHTML = `<b>Root Word : </b>${meaning.word}`;
 
-            meaning = meaning.meanings;
-            console.log(meaning);
-            
-            meaning.forEach((item) => {
-                console.log(item);
-                var container = document.createElement("div");
+                $("#extension #meaningDiv #selectedWord").append(container);
 
-                var partOfSpeech = document.createElement("p");
-                partOfSpeech.innerHTML = "<span>Part of Speech:" + item.partOfSpeech +"</span>";
-                container.appendChild(partOfSpeech);
+                var currentWord = {
+                    word: meaning.word,
+                    meanings: [],
+                };
 
-                console.log(item.definitions[0]);
-                var def = document.createElement("p");
-                def.innerHTML = "<span>Meaning: " + item.definitions[0].definition +"</span>";
-                container.appendChild(def);
+                meaning = meaning.meanings;
+                console.log(meaning);
 
-                var synonym = document.createElement("p");
-                synonym.innerHTML = "<span>Synonym: " + item.definitions[0].synonyms +"</span>";
-                container.appendChild(synonym);
+                meaning.forEach((item) => {
+                    console.log(item);
+                    var container = document.createElement("div");
 
-                var Antonym = document.createElement("p");
-                Antonym.innerHTML = "<span>Antonym: " + item.definitions[0].antonyms +"</span>";
-                container.appendChild(Antonym);
+                    var partOfSpeech = document.createElement("p");
+                    partOfSpeech.innerHTML =
+                        "<span><b>Part of Speech:</b> " +
+                        item.partOfSpeech +
+                        "</span>";
+                    container.appendChild(partOfSpeech);
 
-                var example = document.createElement("p");
-                example.innerHTML = "<span>Examples: " + item.definitions[0].example +"</span>";
-                container.appendChild(example);
+                    var def = document.createElement("p");
+                    def.innerHTML =
+                        "<span><b>Meaning:</b> " +
+                        item.definitions[0].definition +
+                        "</span>";
+                    container.appendChild(def);
+                    var synonym = document.createElement("p");
+                    let splitArray = item.definitions[0].synonyms.splice(4, 4);
 
-                currentWord.meanings.push({
-                    "partOfSpeech": item.partOfSpeech,
-                    "definitions": {
-                        "meaning": item.definitions[0].definition,
-                        "synonyms": item.definitions[0].synonyms,
-                        "antonyms": item.definitions[0].antonyms,
-                        "examples": item.definitions[0].example
-                    }
+                    synonym.innerHTML =
+                        "<span><b>Synonym:</b> " + splitArray + "</span>";
+                    container.appendChild(synonym);
+
+                    var Antonym = document.createElement("p");
+                    Antonym.innerHTML =
+                        "<span><b>Antonym:</b> " +
+                        item.definitions[0].antonyms +
+                        "</span>";
+                    container.appendChild(Antonym);
+
+                    var example = document.createElement("p");
+                    example.innerHTML =
+                        "<span><b>Examples:</b> " +
+                        item.definitions[0].example +
+                        "</span>";
+                    container.appendChild(example);
+
+                    currentWord.meanings.push({
+                        partOfSpeech: item.partOfSpeech,
+                        definitions: {
+                            meaning: item.definitions[0].definition,
+                            synonyms: item.definitions[0].synonyms,
+                            antonyms: item.definitions[0].antonyms,
+                            examples: item.definitions[0].example,
+                        },
+                    });
+
+                    meaningDiv.appendChild(container);
                 });
 
-                meaningDiv.appendChild(container);
-            })
-
-            $("#extension #meaningDiv #meaningFound").html(meaningDiv);
-            $("#extension #meaningDiv #addToVocab").css("display", "block");
-            chrome.storage.sync.set({currentWord: currentWord});
-
-        }else{
-            $("#extension #meaningDiv #meaningFound").css("display", "none");
-            $("#extension #meaningDiv #addToVocab").css("display", "none");
-            $("#extension #meaningDiv #meaningNotFound").css("display", "block");
-
-        }
-
-    }).catch((err) => {
-        console.log(err);
-    });
+                $("#extension #meaningDiv #meaningFound").html(meaningDiv);
+                $("#extension #meaningDiv #addToVocab").css("display", "block");
+                chrome.storage.sync.set({ currentWord: currentWord });
+            } else {
+                $("#extension #meaningDiv #meaningFound").css(
+                    "display",
+                    "none"
+                );
+                $("#extension #meaningDiv #addToVocab").css("display", "none");
+                $("#extension #meaningDiv #meaningNotFound").css(
+                    "display",
+                    "block"
+                );
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 //function to add meaning button activity
@@ -200,19 +251,22 @@ function meaningButtonActivity(text) {
         displayMeaning(text);
         $("#extension #meaningDiv").css("display", "block");
 
-        $("#extension #meaningDiv #addToVocab").on("click", function(){
-            chrome.storage.sync.get(['currentWord'], function(wordResult) {
-              chrome.storage.sync.get(['vocab'], async function(vocabResult) {
-                  var vocab = vocabResult.vocab;
-                  console.log(vocab);
-                  var currentWord = wordResult.currentWord;
-                  console.log(currentWord);
-                  vocab.push(currentWord);
-                  console.log(vocab);
-                  await chrome.storage.sync.set({vocab: vocab});
-              });
+        $("#extension #meaningDiv #addToVocab").on("click", function () {
+            chrome.storage.sync.get(["currentWord"], function (wordResult) {
+                chrome.storage.sync.get(
+                    ["vocab"],
+                    async function (vocabResult) {
+                        var vocab = vocabResult.vocab;
+                        console.log(vocab);
+                        var currentWord = wordResult.currentWord;
+                        console.log(currentWord);
+                        vocab.push(currentWord);
+                        console.log(vocab);
+                        await chrome.storage.sync.set({ vocab: vocab });
+                    }
+                );
             });
-          });
+        });
     });
 }
 

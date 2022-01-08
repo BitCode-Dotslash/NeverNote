@@ -17,44 +17,56 @@
                 </div>
             </div>
         </div>
-        <div class="lower-button-div mh-40">
-            <div
-                id="translateTextButton"
-                data-toggle="tooltip"
-                data-placement="left"
-                title="Translate"
-                class="me-5"
-            >
-                <img
-                    src="https://img.icons8.com/ios/24/000000/google-translate.png"
-                />
-            </div>
-            <div
-                id="meaningButton"
-                data-toggle="tooltip"
-                style="display: none"
-                data-placement="left"
-                title="Search in Dictionary"
-                class="meaning-button me-5"
-            >
-                <img
-                    src="https://img.icons8.com/ios/24/000000/dictionary.png"
-                />
-            </div>
-            <div
-                id="addToNotes"
-                data-toggle="tooltip"
-                data-placement="left"
-                title="Add to Notes"
-            >
-                <img
-                    id="addToNotesImg"
-                    src="https://img.icons8.com/fluency-systems-regular/24/000000/add-rule.png"
-                />
-            </div>
+        <div class="lower-button-div mh-40 min-vw-100 mb-1">
+            <ul class="nav nav-tabs">
+                <li class="nav-item me-5">
+                    <div
+                        id="translateTextButton"
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title="Translate"
+                        class="nav-link"
+                    >
+                        <img
+                            src="https://img.icons8.com/ios/24/000000/google-translate.png"
+                        />
+                    </div>
+                </li>
+                <li class="nav-item me-5">
+                    <div
+                        id="meaningButton"
+                        data-toggle="tooltip"
+                        style="display: none"
+                        data-placement="left"
+                        title="Search in Dictionary"
+                        class="meaning-button nav-link"
+                    >
+                        <img
+                            src="https://img.icons8.com/ios/24/000000/dictionary.png"
+                        />
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div
+                        id="addToNotes"
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title="Add to Notes"
+                        class="nav-link"
+                    >
+                        <img
+                            src="https://img.icons8.com/fluency-systems-regular/24/000000/add-rule.png"
+                        />
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        <div id="translateDiv" style="display: none" class="translate-box">
+        <div
+            id="translateDiv"
+            style="display: none"
+            class="translate-box child-dialog"
+        >
             <div id="selectLanguage" class="translate-box-language">
                 <form id="languageSelectionForm" class="translate-box-form">
                     <div>
@@ -98,7 +110,7 @@
         <div
             id="addToNotesDiv"
             style="display: none"
-            class="add-to-notes-div mt-2"
+            class="add-to-notes-div pt-2 child-dialog"
         >
             <form id="notesSelectionForm" class="datalist-div">
                 <label for="selectNote" class="me-2">Note Title: </label>
@@ -118,11 +130,25 @@
             </form>
         </div>
 
-        <div id="meaningDiv" style="display: none">
+        <div id="meaningDiv" style="display: none" class="child-dialog">
             <div id="selectedWord"></div>
-            <div id="meaningFound" style="display: none;"></div>
-            <div id="meaningNotFound" style="display: none;">Sorry!!! This word is not found in Dictionary.</div>
-            <button id="addToVocab" style="display: none;">Add to Vocab</button>
+            <div id="meaningFound" style="display: none"></div>
+            <div id="meaningNotFound" style="display: none">
+                Sorry!!! This word is not found in Dictionary.
+            </div>
+
+            <div
+                id="addToVocab"
+                data-toggle="tooltip"
+                data-placement="left"
+                title="Add to Notes"
+                class="vocabulary-button"
+                style="display: none"
+            >
+                <img
+                    src="https://img.icons8.com/ios/50/000000/add-property.png"
+                />
+            </div>
         </div>
     </div>
 </div>

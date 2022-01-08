@@ -1,3 +1,8 @@
+* {
+    border: none;
+    margin: 0;
+}
+
 .main-div {
     color: #31312b;
     display: block;
@@ -17,8 +22,6 @@
     z-index: 100;
     border-radius: 5px;
     background-color: #eaebd1;
-
-    border: 1px solid black;
     width: 100%;
 }
 
@@ -77,7 +80,7 @@ img {
 }
 
 .translate-box {
-    margin-top: 2vh;
+    padding-top: 2vh;
     width: 100%;
 }
 
@@ -93,12 +96,30 @@ img {
     overflow: scroll;
 }
 
-select {
+select,
+.child-dialog {
     background-color: #eeeee6;
+    border-radius: 3px;
+    border: 1px solid #31312b;
+}
+
+.child-dialog {
+    padding: 10px;
 }
 
 .datalist-div {
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+.nav-item {
+    border-radius: 10px;
+}
+
+.vocabulary-button {
+    position: absolute;
+    top: 22vh;
+    right: 4vh;
+    z-index: 100;
 }

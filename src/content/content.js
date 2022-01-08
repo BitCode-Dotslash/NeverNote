@@ -35,42 +35,45 @@ function displaySearchDictionaryButton(isWord) {
     }
 }
 
-
 //function to add translate button activity
 function translateButtonActivity(text) {
-  $("#extension #translateTextButton").on("click", function () {
-    $("#extension #translateDiv").css("display", "block");
-    $("#extension #meaningDiv").css("display", "none");
-    
-  });
+    $("#extension #translateTextButton").on("click", function () {
+        $("#extension #translateDiv").css("display", "block");
+        $("#extension #meaningDiv").css("display", "none");
+    });
 
+    $(
+        "#extension #translateDiv #selectLanguage #languageSelectionForm #translateTextSubmit"
+    ).on("click", function (event) {
+        event.preventDefault();
 
-  $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
-    function (event) {
-      event.preventDefault();
+        var translateFrom = $(
+            "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
+        ).val();
 
-      var translateFrom = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
-      ).val();
+        var translateTo = $(
+            "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
+        ).val();
 
-      var translateTo = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
-      ).val();
-
-      callTranslateAPI(translateFrom, translateTo, text).then((translatedText) => {
-        $("#extension #translateDiv #translatedText").html(translatedText);
-      })
-
-    }
-  );
+        if (translateTo !== "")
+            callTranslateAPI(translateFrom, translateTo, text).then(
+                (translatedText) => {
+                    $("#extension #translateDiv #translatedText").html(
+                        `Translated Text : ${translatedText}`
+                    );
+                }
+            );
+        else {
+            alert("Select valid language");
+        }
+    });
 }
 
-
 //function to enable text to speech on click speech button
-function speechButtonActivity(text){
-    $("#extension #speechButton").on("click", async function(){
+function speechButtonActivity(text) {
+    $("#extension #speechButton").on("click", async function () {
         textToSpeechAPI(text);
-    })
+    });
 }
 
 //function to display meaning, antonym, synonym, and example of given word
@@ -87,16 +90,15 @@ async function displayMeaning(word) {
     $("#extension #meaningDiv #wordAntonym").text(antonym);
     $("#extension #meaningDiv #wordExamples").text(example);
 
-
     var currentWord = {
         word: word,
         meaning: meaning,
         synonym: synonym,
         antonym: antonym,
-        example: example
+        example: example,
     };
 
-    await chrome.storage.sync.set({currentWord: currentWord});
+    await chrome.storage.sync.set({ currentWord: currentWord });
 }
 
 //function to add meaning button activity
@@ -110,37 +112,36 @@ function meaningButtonActivity(text) {
 
 // display container on right side on ctrl + Selection event
 $(document).mouseup(async function (event) {
-  if ((event.ctrlKey || event.metaKey) && window.getSelection) {
-    console.log("Detected selection with ctrl key");
+    if ((event.ctrlKey || event.metaKey) && window.getSelection) {
+        console.log("Detected selection with ctrl key");
 
-    //get selected text
-    var selectedText = window.getSelection().toString();
-    selectedText = selectedText.trim();
-    console.log(selectedText);
+        //get selected text
+        var selectedText = window.getSelection().toString();
+        selectedText = selectedText.trim();
+        console.log(selectedText);
 
-    //check for whether text is single word or not
-    var isWord = selectedText.split(" ").length == 1;
+        //check for whether text is single word or not
+        var isWord = selectedText.split(" ").length == 1;
 
-    //create display container
-    createExtensionContainer()
-      .then(() => {
-        //add selected text to the container
-        console.log("containerAdded");
+        //create display container
+        createExtensionContainer()
+            .then(() => {
+                //add selected text to the container
+                console.log("containerAdded");
 
-        displaySearchDictionaryButton(isWord);
-        translateButtonActivity(selectedText);
-        meaningButtonActivity(selectedText);
-        speechButtonActivity(selectedText);
+                displaySearchDictionaryButton(isWord);
+                translateButtonActivity(selectedText);
+                meaningButtonActivity(selectedText);
+                speechButtonActivity(selectedText);
 
-        $("#extension #selectedText").html(selectedText);
-        console.log($("#extension"));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+                $("#extension #selectedText").html(selectedText);
+                console.log($("#extension"));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 });
-
 
 //remove extension container when user clicks outside the div
 $(document).mousedown(function (event) {

@@ -13,7 +13,7 @@
     "content_scripts": [
       {
         "matches": ["https://*/*"],
-        "js":["/src/script/jquery.min.js","/src/script/content.js"]
+        "js":["/src/content/jquery.min.js","/src/content/content.js"]
       }
     ],
     "action": {
@@ -25,5 +25,11 @@
     },
     "background": {
       "service_worker": "/src/background.js"
-    }
+    },
+    "web_accessible_resources": [
+      {
+        "resources": [ "/src/content/content.html"],
+        "matches": ["https://*/*"]
+      }
+    ]
   }

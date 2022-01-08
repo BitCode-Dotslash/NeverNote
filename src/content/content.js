@@ -65,6 +65,14 @@ function translateButtonActivity(text) {
   );
 }
 
+
+//function to enable text to speech on click speech button
+function speechButtonActivity(text){
+    $("#extension #speechButton").on("click", async function(){
+        textToSpeechAPI(text);
+    })
+}
+
 //function to display meaning, antonym, synonym, and example of given word
 async function displayMeaning(word) {
     var meaning = callMeaningAPI(word);
@@ -122,6 +130,7 @@ $(document).mouseup(async function (event) {
         displaySearchDictionaryButton(isWord);
         translateButtonActivity(selectedText);
         meaningButtonActivity(selectedText);
+        speechButtonActivity(selectedText);
 
         $("#extension #selectedText").html(selectedText);
         console.log($("#extension"));

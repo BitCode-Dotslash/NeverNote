@@ -12,9 +12,10 @@
         {
             "matches": ["https://*/*"],
             "js": [
+                "/src/content/microsoft.cognitiveservices.speech.sdk.bundle.js",
                 "/bootstrap/js/bootstrap.bundle.js",
                 "/src/content/jquery.min.js",
-                "/src/content/apiKeys.js",
+                "/src/content/apiKey.js",
                 "/src/content/apiCall.js",
                 "/src/content/content.js"
             ],

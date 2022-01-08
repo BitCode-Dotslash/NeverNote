@@ -34,6 +34,41 @@ function callTranslateAPI(translateFrom, translateTo, text) {
 
     // return "Text is Translated";
   }
+
+
+  //text to speech api call
+  function textToSpeechAPI(text){
+    
+    var synthesizer;
+  
+    var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+      speechAPI.key,
+      speechAPI.region
+    );
+    synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
+  
+    synthesizer.speakTextAsync(
+      text,
+      function (result) {
+        if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
+          console.log("synthesis finished for [" + text + "].\n");
+        } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
+          console.log(
+            "synthesis failed. Error detail: " + result.errorDetails + "\n"
+          );
+        }
+        console.log(result);
+        synthesizer.close();
+        synthesizer = undefined;
+      },
+      function (err) {
+        console.log(err);
+  
+        synthesizer.close();
+        synthesizer = undefined;
+      }
+    );
+  }
   
   //Meaning api call
   function callMeaningAPI(word){

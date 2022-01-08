@@ -1,5 +1,11 @@
 console.log("Content Script at Work");
 
+// var automate;
+
+// chrome.storage.sync.get(["automate"], function (result) {
+//   automate = result.automate;
+// });
+
 //function to create extension container to display
 async function createExtensionContainer() {
     //create container
@@ -35,42 +41,83 @@ function displaySearchDictionaryButton(isWord) {
     }
 }
 
-
 //function to add translate button activity
 function translateButtonActivity(text) {
-  $("#extension #translateTextButton").on("click", function () {
-    $("#extension #translateDiv").css("display", "block");
-    $("#extension #meaningDiv").css("display", "none");
-    
-  });
+    $("#extension #translateTextButton").on("click", function () {
+        $("#extension #translateDiv").css("display", "block");
+        $("#extension #meaningDiv").css("display", "none");
+    });
 
+    $(
+        "#extension #translateDiv #selectLanguage #languageSelectionForm #translateTextSubmit"
+    ).on("click", function (event) {
+        event.preventDefault();
 
-  $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
-    function (event) {
-      event.preventDefault();
+        var translateFrom = $(
+            "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
+        ).val();
 
-      var translateFrom = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
-      ).val();
+        var translateTo = $(
+            "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
+        ).val();
 
-      var translateTo = $(
-        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
-      ).val();
-
-      callTranslateAPI(translateFrom, translateTo, text).then((translatedText) => {
-        $("#extension #translateDiv #translatedText").html(translatedText);
-      })
-
-    }
-  );
+        if (translateTo !== "")
+            callTranslateAPI(translateFrom, translateTo, text).then(
+                (translatedText) => {
+                    $("#extension #translateDiv #translatedText").html(
+                        `Translated Text : ${translatedText}`
+                    );
+                }
+            );
+        else {
+            alert("Select valid language");
+        }
+    });
 }
 
-
 //function to enable text to speech on click speech button
-function speechButtonActivity(text){
-    $("#extension #speechButton").on("click", async function(){
+function speechButtonActivity(text) {
+    $("#extension #speechButton").on("click", async function () {
         textToSpeechAPI(text);
-    })
+    });
+}
+
+function addToNotesButtonActivity(text) {
+    $("#extension #addToNotes").on("click", function () {
+        console.log("Fetched");
+        var container = $("#extension #addToNotesDiv #noteslist");
+        chrome.storage.sync.get(["notes"], function (result) {
+            var notes = Object.keys(result.notes);
+
+            notes.forEach((notebook) => {
+                container.append(new Option(notebook, notebook));
+            });
+
+            $("#extension #addToNotesDiv").css("display", "block");
+        });
+    });
+}
+
+function saveToNotes(text) {
+    $("#extension #addToNotesDiv #notesSelectionForm").submit(function (event) {
+        event.preventDefault();
+        var selectedNotebook = $(
+            "#extension #addToNotesDiv #notesSelectionForm #select_note"
+        ).val();
+        console.log(selectedNotebook);
+        chrome.storage.sync.get(["notes"], function (result) {
+            var notes = result.notes;
+            console.log(notes);
+            var notebookContent = notes[selectedNotebook];
+            console.log(typeof notebookContent);
+            console.log(notebookContent);
+            notebookContent.push(text);
+            console.log(notebookContent);
+            notes[selectedNotebook] = notebookContent;
+            console.log(notes);
+            chrome.storage.sync.set({ notes: notes });
+        });
+    });
 }
 
 //function to display meaning, antonym, synonym, and example of given word
@@ -171,37 +218,37 @@ function meaningButtonActivity(text) {
 
 // display container on right side on ctrl + Selection event
 $(document).mouseup(async function (event) {
-  if ((event.ctrlKey || event.metaKey) && window.getSelection) {
-    console.log("Detected selection with ctrl key");
+    if ((event.ctrlKey || event.metaKey) && window.getSelection) {
+        console.log("Detected selection with ctrl key");
 
-    //get selected text
-    var selectedText = window.getSelection().toString();
-    selectedText = selectedText.trim();
-    console.log(selectedText);
+        //get selected text
+        var selectedText = window.getSelection().toString();
+        selectedText = selectedText.trim();
+        console.log(selectedText);
 
-    //check for whether text is single word or not
-    var isWord = selectedText.split(" ").length == 1;
+        //check for whether text is single word or not
+        var isWord = selectedText.split(" ").length == 1;
 
-    //create display container
-    createExtensionContainer()
-      .then(() => {
-        //add selected text to the container
-        console.log("containerAdded");
+        //create display container
+        createExtensionContainer()
+            .then(() => {
+                //add selected text to the container
+                console.log("containerAdded");
 
-        displaySearchDictionaryButton(isWord);
-        translateButtonActivity(selectedText);
-        meaningButtonActivity(selectedText);
-        speechButtonActivity(selectedText);
-
-        $("#extension #selectedText").html(selectedText);
-        console.log($("#extension"));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+                displaySearchDictionaryButton(isWord);
+                translateButtonActivity(selectedText);
+                meaningButtonActivity(selectedText);
+                speechButtonActivity(selectedText);
+                addToNotesButtonActivity(selectedText);
+                saveToNotes(selectedText);
+                $("#extension #selectedText").html(selectedText);
+                console.log($("#extension"));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 });
-
 
 //remove extension container when user clicks outside the div
 $(document).mousedown(function (event) {

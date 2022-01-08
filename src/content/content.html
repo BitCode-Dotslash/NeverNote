@@ -6,22 +6,6 @@
             </div>
             <div class="button-div">
                 <div
-                    id="addToNotes"
-                    data-toggle="tooltip"
-                    data-placement="left"
-                    title="Add to Notes"
-                >
-                    <img
-                        id="addToNotesImg"
-                        src="https://img.icons8.com/fluency-systems-regular/24/000000/add-rule.png"
-                    />
-                    <img
-                        id="doneAddToNotes"
-                        style="display: none"
-                        src="https://img.icons8.com/ios/24/000000/checkmark--v2.png"
-                    />
-                </div>
-                <div
                     id="speechButton"
                     data-toggle="tooltip"
                     data-placement="left"
@@ -33,84 +17,105 @@
                 </div>
             </div>
         </div>
-        <div class="lower-button-div">
+        <div class="lower-button-div mh-40">
             <div
                 id="translateTextButton"
                 data-toggle="tooltip"
                 data-placement="left"
                 title="Translate"
-                class="d-flex me-5 jc-start"
+                class="me-5"
             >
                 <img
-                    style="margin-right: 2vh"
                     src="https://img.icons8.com/ios/24/000000/google-translate.png"
                 />
-                <div id="translateDiv" style="display: none">
-                    <div id="selectLanguage" class="translate-box">
-                        <form id="languageSelectionForm">
-                            <label for="translate_from">From:</label>
-                            <select
-                                name="translate_from"
-                                id="translate_from"
-                                required
-                            >
-                                <option value="en">English</option>
-                                <option value="hi">Hindi</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                            </select>
-                            <label for="translate_to">To:</label>
-                            <select
-                                name="translate_to"
-                                id="translate_to"
-                                required
-                            >
-                                <option value="en">English</option>
-                                <option value="hi">Hindi</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                            </select>
-                            <div
-                                id="translateTextSubmit"
-                                data-toggle="tooltip"
-                                data-placement="left"
-                                title="Translate"
-                                class="ps-2"
-                            >
-                                <button type="submit">
-                                  <img
-                                        src="https://img.icons8.com/material-outlined/24/000000/enter-2.png"
-                                    />
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+            </div>
+            <div
+                id="meaningButton"
+                data-toggle="tooltip"
+                style="display: none"
+                data-placement="left"
+                title="Search in Dictionary"
+                class="meaning-button me-5"
+            >
+                <img
+                    src="https://img.icons8.com/ios/24/000000/dictionary.png"
+                />
+            </div>
+            <div
+                id="addToNotes"
+                data-toggle="tooltip"
+                data-placement="left"
+                title="Add to Notes"
+            >
+                <img
+                    id="addToNotesImg"
+                    src="https://img.icons8.com/fluency-systems-regular/24/000000/add-rule.png"
+                />
+            </div>
+        </div>
 
-                    <div id="translatedText"></div>
-                </div>
-              </div>
-                <div
-                    id="meaningButton"
-                    data-toggle="tooltip"
-                    style="display: none"
-                    data-placement="left"
-                    title="Search in Dictionary"
-                >
+        <div id="translateDiv" style="display: none" class="translate-box">
+            <div id="selectLanguage" class="translate-box-language">
+                <form id="languageSelectionForm" class="translate-box-form">
+                    <div>
+                        <label for="translate_from" class="pe-1">From:</label>
+                        <select
+                            name="translate_from"
+                            id="translate_from"
+                            required
+                        >
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="translate_to" class="ps-2 pe-1">To:</label>
+                        <select name="translate_to" id="translate_to" required>
+                            <option value="">Select Language</option>
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                        </select>
+                    </div>
+                    <div
+                        id="translateTextSubmit"
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title="Translate"
+                        class="ps-2"
+                    >
+                        <img
+                            src="https://img.icons8.com/ios/24/000000/circled-right.png"
+                        />
+                    </div>
+                </form>
+            </div>
+            <div id="translatedText" class="translated-text mt-2"></div>
+        </div>
+        <div
+            id="addToNotesDiv"
+            style="display: none"
+            class="add-to-notes-div mt-2"
+        >
+            <form id="notesSelectionForm" class="datalist-div">
+                <label for="selectNote" class="me-2">Note Title: </label>
+                <input
+                    name="selectNote"
+                    list="noteslist"
+                    autocapitalize
+                    placeholder="Title"
+                    size="15"
+                />
+                <datalist id="noteslist"> </datalist>
+                <div id="addToNoteSubmit" class="ms-2">
                     <img
-                        src="https://img.icons8.com/ios/24/000000/dictionary.png"
+                        src="https://img.icons8.com/ios-glyphs/30/000000/save--v1.png"
                     />
                 </div>
-        </div>
-        <div id="addToNotesDiv" style="display: none">
-            <form id="notesSelectionForm">
-                <label for="selectNote">Note</label>
-                <select name="selectNote" id="select_note" required></select>
-                <button type="submit">Append</button>
             </form>
-            <div id="noNotes" style="display: none">
-                You do not have any notebook. Please create new notebook from
-                extension Popup.
-            </div>
         </div>
 
         <div id="meaningDiv" style="display: none">

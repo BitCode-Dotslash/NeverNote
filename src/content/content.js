@@ -102,10 +102,10 @@ async function displayMeaning(word) {
 //function to add meaning button activity
 function meaningButtonActivity(text) {
     $("#extension #meaningButton").on("click", function () {
-    $("#extension #translateDiv").css("display", "none");
-    $("#extension #meaningDiv").css("display", "block");
-    displayMeaning(text);
-  });
+        $("#extension #translateDiv").css("display", "none");
+        $("#extension #meaningDiv").css("display", "block");
+        displayMeaning(text);
+    });
 }
 
 // display container on right side on ctrl + Selection event

@@ -73,7 +73,17 @@ function callTranslateAPI(translateFrom, translateTo, text) {
   //Meaning api call
   function callMeaningAPI(word){
       //call API
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
       console.log(word);
+      fetch("https://api.dictionaryapi.dev/api/v2/entries/en/"+word, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+      
       return "This is the meaning API";
     }
     

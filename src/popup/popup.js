@@ -1,6 +1,7 @@
 // display create notebook section on click create notebook button
 $("#createNotebook").on("click", function () {
   $("#createNotebookDiv").css("display", "block");
+  $("#downloadNotebookDiv").css("display", "none")
   $("#createNotebookDiv #createNotebookForm button").prop("disabled", true);
 });
 
@@ -57,3 +58,29 @@ chrome.storage.sync.get(["optionsUrl"], function (result) {
     });
   });
 });
+
+$("#downloadNotebook").on("click", function(){
+    chrome.storage.sync.get(['notes'], function(result){
+        var notes = Object.keys(result.notes);
+        console.log(notes.length);
+        if(notes.length>0){
+          console.log("notes Available");
+            $("#noNotebooksFound").css("display", "none");
+            var container = document.createElement("div");
+
+            notes.forEach((notebook) => {
+                var downloadLink = document.createElement("button");
+                downloadLink.id = notebook;
+                downloadLink.innerText = notebook;
+                container.appendChild(downloadLink);
+            })
+
+            $("#downloadNotebookDiv").append(container);
+        }else{
+            console.log("No notes found");
+            $("#noNotebooksFound").css("display", "block");
+        }
+
+        $("#downloadNotebookDiv").css("display", "block")
+    })
+})

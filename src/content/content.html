@@ -66,32 +66,32 @@
                             <label for="translate_from" class="pe-1"
                                 >From:</label
                             >
-                            <select
+                            <input
                                 name="translate_from"
+                                list="languageFromList"
                                 id="translate_from"
+                                autocapitalize
+                                placeholder="from"
+                                size="15"
                                 required
-                            >
-                                <option value="en">English</option>
-                                <option value="hi">Hindi</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                            </select>
+                            />
+                            <datalist id="languageFromList"> </datalist>
                         </div>
                         <div>
                             <label for="translate_to" class="ps-2 pe-1"
                                 >To:</label
                             >
-                            <select
+
+                            <input
                                 name="translate_to"
+                                list="languageToList"
                                 id="translate_to"
+                                autocapitalize
+                                placeholder="to"
+                                size="15"
                                 required
-                            >
-                                <option value="">Select Language</option>
-                                <option value="en">English</option>
-                                <option value="hi">Hindi</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                            </select>
+                            />
+                            <datalist id="languageToList"> </datalist>
                         </div>
                         <div
                             id="translateTextSubmit"

@@ -12,8 +12,6 @@ async function createExtensionContainer() {
     console.log("add container");
     var extensionContainer = document.createElement("div");
     extensionContainer.id = "extensionContainer";
-    // extensionContainer.style.cssText =
-    //     "position:absolute;top:0;right:0;width:auto;height:auto;opacity:1;z-index:1000000;background-color:pink;";
     document.body.appendChild(extensionContainer);
 
     return new Promise(async (resolve, reject) => {
@@ -51,6 +49,19 @@ function translateButtonActivity(text) {
         $("#meaningButton").removeClass("speaker");
         $("#speechButton").removeClass("speaker ");
         $("#addToNotes").removeClass("speaker");
+
+        var toList = $("#extension #translateDiv #languageToList");
+        var fromList = $("#extension #translateDiv #languageFromList");
+        getLanguageList().then((languages) => {
+            for (language in languages) {
+                console.log(language);
+                toList.append(new Option(languages[language].name, language));
+                fromList.append(new Option(languages[language].name, language));
+            }
+
+            $("#extension #translateDiv").css("display", "block");
+            $("#extension #meaningDiv").css("display", "none");
+        });
     });
 
     $(
@@ -131,17 +142,13 @@ function saveToNotes(text) {
                     console.log(typeof notebookContent);
                     console.log(notebookContent);
 
-                    if (!notebookContent) {
-                        notes[selectedNotebook] = [];
-                        notebookContent = notes[selectedNotebook];
-                    }
-
                     notebookContent.push(text);
                     console.log(notebookContent);
                     notes[selectedNotebook] = notebookContent;
                     console.log(notes);
 
                     chrome.storage.sync.set({ notes: notes });
+                    $("#extension #addToNotesDiv").css("display", "none");
                 });
             } else {
                 alert("Select valid title");

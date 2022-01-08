@@ -3,33 +3,36 @@
     "description": "A Google Chrome extension!",
     "version": "1.0",
     "manifest_version": 3,
-    "permissions": [
-      "storage"
-    ],
+    "permissions": ["storage"],
     "icons": {
-      "48": "/images/icon.png",
-      "128": "/images/icon.png"
+        "48": "/images/icon.png",
+        "128": "/images/icon.png"
     },
     "content_scripts": [
-      {
-        "matches": ["https://*/*"],
-        "js":["/src/content/jquery.min.js","/src/content/content.js"]
-      }
+        {
+            "matches": ["https://*/*"],
+            "js": [
+                "jquery.min.js",
+                "./bootstrap/js/bootstrap.bundle.js",
+                "content.js"
+            ],
+            "css": ["./bootstrap/css/bootstrap.css", "content.css"]
+        }
     ],
     "action": {
-      "default_popup": "/src/popup/popup.html",
-      "default_icon": {
-      "48": "/images/icon.png",
-      "128": "/images/icon.png"
-      }
+        "default_popup": "/src/popup/popup.html",
+        "default_icon": {
+            "48": "/images/icon.png",
+            "128": "/images/icon.png"
+        }
     },
     "background": {
-      "service_worker": "/src/background.js"
+        "service_worker": "/src/background.js"
     },
     "web_accessible_resources": [
-      {
-        "resources": [ "/src/content/content.html"],
-        "matches": ["https://*/*"]
-      }
+        {
+            "resources": ["/src/content/content.html"],
+            "matches": ["https://*/*"]
+        }
     ]
-  }
+}

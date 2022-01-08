@@ -35,49 +35,15 @@ function displaySearchDictionaryButton(isWord) {
     }
 }
 
-//translate api call
-function callTranslateAPI(translateFrom, translateTo, text) {
-  console.log(translateFrom, translateTo);
-  return "Text is Translated";
-}
-
-//Meaning api call
-function callMeaningAPI(word){
-    //call API
-    console.log(word);
-    return "This is the meaning API";
-  }
-  
-//Synonym api call
-  function callSynonymAPI(word){
-    //call API
-    console.log(word);
-    return "This is the Synonym API";
-  }
-  
-//antonym api call
-function callAntonymAPI(word){
-    //call API
-    console.log(word);
-    return "This is the Antonym API";
-}
-  
-
-// Example api call
-function callExampleAPI(word){
-    //call API
-    console.log(word);
-    return "This is the Example API";
-}
-  
-
 
 //function to add translate button activity
 function translateButtonActivity(text) {
   $("#extension #translateTextButton").on("click", function () {
     $("#extension #translateDiv").css("display", "block");
     $("#extension #meaningDiv").css("display", "none");
+    
   });
+
 
   $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
     function (event) {
@@ -85,18 +51,15 @@ function translateButtonActivity(text) {
 
       var translateFrom = $(
         "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
-      )
-        .find(":selected")
-        .text();
+      ).val();
 
       var translateTo = $(
         "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
-      )
-        .find(":selected")
-        .text();
+      ).val();
 
-      var translatedText = callTranslateAPI(translateFrom, translateTo, text);
-      $("#extension #translateDiv #translatedText").html(translatedText);
+      callTranslateAPI(translateFrom, translateTo, text).then((translatedText) => {
+        $("#extension #translateDiv #translatedText").html(translatedText);
+      })
 
     }
   );

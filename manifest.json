@@ -12,13 +12,15 @@
         {
             "matches": ["https://*/*"],
             "js": [
+                "/bootstrap/js/bootstrap.bundle.js",
                 "/src/content/jquery.min.js",
-                "/src/content/content.js",
-                "./bootstrap/js/bootstrap.bundle.js"
+                "/src/content/apiKeys.js",
+                "/src/content/apiCall.js",
+                "/src/content/content.js"
             ],
             "css": [
-                "./bootstrap/css/bootstrap.css",
-                "./src/content/content.css"
+                "/bootstrap/css/bootstrap.css",
+                "/src/content/content.css"
             ]
         }
     ],

@@ -71,7 +71,9 @@ function printFunctionality(){
 // display create notebook section on click create notebook button
 $("#createNotebook").on("click", function () {
   $("#createNotebookDiv").css("display", "block");
-  $("#downloadNotebookDiv").css("display", "none")
+  $("#downloadNotebookDiv").css("display", "none");
+  $("#downloadNotebook").addClass('active');
+  $("#createNotebook").removeClass('active');
   $("#createNotebookDiv #createNotebookForm button").prop("disabled", true);
 });
 
@@ -130,6 +132,8 @@ chrome.storage.sync.get(["optionsUrl"], function (result) {
 });
 
 $("#downloadNotebook").on("click", function(){
+    $("#downloadNotebook").addClass('active');
+    $("#createNotebook").removeClass('active');
     chrome.storage.sync.get(['notes'], function(result){
         var notes = Object.keys(result.notes);
         console.log(notes.length);
@@ -151,7 +155,8 @@ $("#downloadNotebook").on("click", function(){
             $("#noNotebooksFound").css("display", "block");
         }
 
-        $("#downloadNotebookDiv").css("display", "block")
+        $("#createNotebookDiv").css("display", "none");
+        $("#downloadNotebookDiv").css("display", "block");
 
         printFunctionality();
 

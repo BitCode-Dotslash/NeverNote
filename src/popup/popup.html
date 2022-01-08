@@ -7,42 +7,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- css files -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./../../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
 
-    <div class="container">
-        <img class="logo" src="/images/logo_crop.png" />
-        <div class="name">
-            <h1>NeverNote</h1>
-        </div>
+
+    <div class="p-3 container">
+        
+            <div class=" pb-2 container border-secondary border-bottom border-1">
+                <div class="row">
+                    <div class="px-1 col-4">
+                        <img class="logo ms-auto d-block" src="/images/logo2.png" />
+                    </div>
+                    <div class="px-0 col-8">
+                        <p class="fw-bolder mt-4 mb-0 name">NeverNote</p>
+                    </div>
+                </div>   
+            </div>
+            <div class="container">
+                <div class="row my-4">
+                    <div class="col-12 text-center">
+                        <button class="btn-custom" id="optionsButton">Show Vocabulary</button>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-6 text-center">
+                        <button class="btn-custom" id="createNotebook">Create Notebook</button>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button class="btn-custom" id="downloadNotebook">Download Notebook</button>
+                    </div>
+                </div>
+                
+            </div>
+        
+        
+            <div class="container">
+                <!-- create Notebook section -->
+                <div id="createNotebookDiv" style="display: none;">
+                    <form id="createNotebookForm">
+                        <label for="create Notebook">Notebook Name</label>
+                        <input type="text" id="notebookName" name="notebookName" required>
+                        <button type="submit">Create</button>
+                    </form>
+                </div>
+            
+                <!-- create Notebook section -->
+                <div id="downloadNotebookDiv" style="display: none;">
+                    <div id="noNotebooksFound" style="display: none;">You do not have any notebook</div>
+                </div>
+            </div>
+            
+        
+        
+            
+        
     </div>
-
-
-    <button id="createNotebook">Create Notebook</button>
-    <button id="downloadNotebook">Download Notebook</button>
-    <button id="optionsButton">Show Vocabulary</button>
-
-
-    <!-- create Notebook section -->
-    <div id="createNotebookDiv" style="display: none;">
-        <form id="createNotebookForm">
-            <label for="create Notebook">Notebook Name</label>
-            <input type="text" id="notebookName" name="notebookName" required>
-            <button type="submit">Create</button>
-        </form>
-    </div>
-
-    <!-- create Notebook section -->
-    <div id="downloadNotebookDiv" style="display: none;">
-        <div id="noNotebooksFound" style="display: none;">You do not have any notebook</div>
-    </div>
-
+    
+    
 
 
 
     <!-- js files -->
+    <script src="./../../bootstrap/js/bootstrap.bundle.js"></script>
     <script src="./../content/jquery.min.js"></script>
     <script src="./../content/jspdf.min.js"></script>
     <script src="./../content/FileSaver.min.js"></script>

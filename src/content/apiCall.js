@@ -1,3 +1,24 @@
+
+function getLanguageList(){
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  return new Promise((resolve, reject) => {
+    fetch("https://api.cognitive.microsofttranslator.com/languages?api-version=3.0", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(JSON.parse(result).translation);
+      resolve(JSON.parse(result).translation);
+    })
+    .catch(error => {
+        reject(error);
+    });
+  })
+  
+}
+
 //translate api call
 function callTranslateAPI(translateFrom, translateTo, text) {
     console.log(translateFrom, translateTo);

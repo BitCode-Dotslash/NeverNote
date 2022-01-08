@@ -43,9 +43,21 @@ function displaySearchDictionaryButton(isWord) {
 
 //function to add translate button activity
 function translateButtonActivity(text) {
-    $("#extension #translateTextButton").on("click", function () {
-        $("#extension #translateDiv").css("display", "block");
-        $("#extension #meaningDiv").css("display", "none");
+    $("#extension #translateTextButton").on("click",  function () {
+
+        var toList = $("#extension #translateDiv #languageToList");
+        var fromList = $("#extension #translateDiv #languageFromList");
+        getLanguageList().then((languages) => {
+            for(language in languages){
+                console.log(language);
+                toList.append(new Option(languages[language].name, language));
+                fromList.append(new Option(languages[language].name, language));
+            }
+
+            $("#extension #translateDiv").css("display", "block");
+            $("#extension #meaningDiv").css("display", "none");
+        });
+        
     });
 
     $(

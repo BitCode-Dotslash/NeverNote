@@ -12,9 +12,9 @@
         {
             "matches": ["https://*/*"],
             "js": [
-                "jquery.min.js",
-                "./bootstrap/js/bootstrap.bundle.js",
-                "content.js"
+                "/src/content/jquery.min.js",
+                "/src/content/content.js",
+                "./bootstrap/js/bootstrap.bundle.js"
             ],
             "css": ["./bootstrap/css/bootstrap.css", "content.css"]
         }

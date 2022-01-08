@@ -68,6 +68,18 @@ function translateButtonActivity() {
   );
 }
 
+//
+async function displayMeaning(word) {}
+
+//function to add meaning button activity
+function meaningButtonActivity() {
+  $("#extension #meaningButton").on("click", function () {
+    $("#extension #translateDiv").css("display", "none");
+    $("#extension #meaningDiv").css("display", "block");
+    displayMeaning(text);
+  });
+}
+
 // display container on right side on ctrl + Selection event
 $(document).mouseup(async function (event) {
   if ((event.ctrlKey || event.metaKey) && window.getSelection) {
@@ -79,12 +91,12 @@ $(document).mouseup(async function (event) {
     console.log(selectedText);
 
     //store selected text in chrome storage
-    chrome.storage.sync.set({ selectedText: selectedText });
+    await chrome.storage.sync.set({ selectedText: selectedText });
 
     var isWord = selectedText.split(" ").length == 1;
 
     //store isWord in chrome storage
-    chrome.storage.sync.set({ isWord: isWord });
+    await chrome.storage.sync.set({ isWord: isWord });
 
     //create display container
     createExtensionContainer()
@@ -94,6 +106,7 @@ $(document).mouseup(async function (event) {
 
         displaySearchDictionaryButton(isWord);
         translateButtonActivity();
+        meaningButtonActivity();
 
         $("#extension #selectedText").html(selectedText);
         console.log($("#extension"));

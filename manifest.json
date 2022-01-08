@@ -16,7 +16,10 @@
                 "/src/content/content.js",
                 "./bootstrap/js/bootstrap.bundle.js"
             ],
-            "css": ["./bootstrap/css/bootstrap.css", "content.css"]
+            "css": [
+                "./bootstrap/css/bootstrap.css",
+                "./src/content/content.css"
+            ]
         }
     ],
     "action": {

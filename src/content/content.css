@@ -1,13 +1,12 @@
 .main-div {
     padding: 2vh;
-    height: 100vh;
-    width: 100%;
     display: block;
     position: fixed;
     bottom: 0;
     right: 0;
     z-index: 99;
-    border: 1px solid red;
+    max-width: 40%;
+    min-width: 20%;
     opacity: 0.9;
 }
 
@@ -16,11 +15,7 @@
     background-color: #eaebd1;
     border-radius: 5px;
     max-height: 40vh;
-    margin-left: auto;
-    margin-top: auto;
-    max-width: 40%;
-    min-width: 20%;
-    width: fit-content;
+    width: 100%;
 }
 
 .inner-main {
@@ -51,7 +46,6 @@
     display: flex;
     flex-direction: column;
     margin: 1vh;
-
     width: 10%;
     justify-content: start;
     align-items: center;
@@ -61,8 +55,8 @@
 }
 
 .lower-button-div {
-    margin-top: 2vh;
-    margin-left: 5vh;
+    margin-top: 2%;
+    margin-left: 5%;
     display: flex;
     flex-direction: row;
     justify-content: start;

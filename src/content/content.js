@@ -34,18 +34,47 @@ function displaySearchDictionaryButton(isWord) {
 }
 
 //translate api call
-function callTranslateAPI(translateFrom, translateTo) {
+function callTranslateAPI(translateFrom, translateTo, text) {
   console.log(translateFrom, translateTo);
   return "Text is Translated";
 }
 
+//Meaning api call
+function callMeaningAPI(word){
+    //call API
+    console.log(word);
+    return "This is the meaning API";
+  }
+  
+//Synonym api call
+  function callSynonymAPI(word){
+    //call API
+    console.log(word);
+    return "This is the Synonym API";
+  }
+  
+//antonym api call
+function callAntonymAPI(word){
+    //call API
+    console.log(word);
+    return "This is the Antonym API";
+}
+  
+
+// Example api call
+function callExampleAPI(word){
+    //call API
+    console.log(word);
+    return "This is the Example API";
+}
+  
+
+
 //function to add translate button activity
-function translateButtonActivity() {
+function translateButtonActivity(text) {
   $("#extension #translateTextButton").on("click", function () {
     $("#extension #translateDiv").css("display", "block");
     $("#extension #meaningDiv").css("display", "none");
-    $("#extension #synonymDiv").css("display", "none");
-    $("#extension #antonymDiv").css("display", "none");
   });
 
   $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
@@ -57,23 +86,49 @@ function translateButtonActivity() {
       )
         .find(":selected")
         .text();
+
       var translateTo = $(
         "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
       )
         .find(":selected")
         .text();
-      var translatedText = callTranslateAPI(translateFrom, translateTo);
+
+      var translatedText = callTranslateAPI(translateFrom, translateTo, text);
       $("#extension #translateDiv #translatedText").html(translatedText);
+
     }
   );
 }
 
-//
-async function displayMeaning(word) {}
+//function to display meaning, antonym, synonym, and example of given word
+async function displayMeaning(word) {
+    var meaning = callMeaningAPI(word);
+    var synonym = callSynonymAPI(word);
+    var antonym = callAntonymAPI(word);
+    var example = callExampleAPI(word);
+
+    console.log(word, meaning, synonym, antonym);
+    $("#extension #meaningDiv #selectedWord").text(word);
+    $("#extension #meaningDiv #wordMeaning").text(meaning);
+    $("#extension #meaningDiv #wordSynonym").text(synonym);
+    $("#extension #meaningDiv #wordAntonym").text(antonym);
+    $("#extension #meaningDiv #wordExamples").text(example);
+
+
+    var currentWord = {
+        word: word,
+        meaning: meaning,
+        synonym: synonym,
+        antonym: antonym,
+        example: example
+    };
+
+    await chrome.storage.sync.set({currentWord: currentWord});
+}
 
 //function to add meaning button activity
-function meaningButtonActivity() {
-  $("#extension #meaningButton").on("click", function () {
+function meaningButtonActivity(text) {
+    $("#extension #meaningButton").on("click", function () {
     $("#extension #translateDiv").css("display", "none");
     $("#extension #meaningDiv").css("display", "block");
     displayMeaning(text);
@@ -90,13 +145,8 @@ $(document).mouseup(async function (event) {
     selectedText = selectedText.trim();
     console.log(selectedText);
 
-    //store selected text in chrome storage
-    await chrome.storage.sync.set({ selectedText: selectedText });
-
+    //check for whether text is single word or not
     var isWord = selectedText.split(" ").length == 1;
-
-    //store isWord in chrome storage
-    await chrome.storage.sync.set({ isWord: isWord });
 
     //create display container
     createExtensionContainer()
@@ -105,8 +155,8 @@ $(document).mouseup(async function (event) {
         console.log("containerAdded");
 
         displaySearchDictionaryButton(isWord);
-        translateButtonActivity();
-        meaningButtonActivity();
+        translateButtonActivity(selectedText);
+        meaningButtonActivity(selectedText);
 
         $("#extension #selectedText").html(selectedText);
         console.log($("#extension"));
@@ -116,6 +166,7 @@ $(document).mouseup(async function (event) {
       });
   }
 });
+
 
 //remove extension container when user clicks outside the div
 $(document).mousedown(function (event) {

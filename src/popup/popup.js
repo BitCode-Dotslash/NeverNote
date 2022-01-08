@@ -145,12 +145,16 @@ $("#downloadNotebook").on("click", function () {
 
             notes.forEach((notebook, index) => {
                 var downloadLink = document.createElement("div");
+                downloadLink.classList.add("single-div-download");
+
                 downloadLink.id = notebook;
-                downloadLink.innerHTML = `${index + 1}. ${notebook}`;
+                downloadLink.innerHTML = `<div>${
+                    index + 1
+                }. ${notebook}</div><div> <img id='${notebook}-download' class='me-3' src="https://img.icons8.com/material-rounded/24/000000/download--v1.png"/> <img id='${notebook}-delete' src="https://img.icons8.com/ios-glyphs/24/000000/filled-trash.png"/></div>`;
                 container.appendChild(downloadLink);
             });
 
-            $("#downloadNotebookDiv").append(container);
+            $("#downloadNotebookDiv").html(container);
         } else {
             console.log("No notes found");
             $("#noNotebooksFound").css("display", "block");

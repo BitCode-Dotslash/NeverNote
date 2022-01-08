@@ -79,3 +79,19 @@ input:focus {
 .notelist > div {
     cursor: pointer;
 }
+
+.single-div-download {
+    margin-left: 2vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1vh 3vh;
+    border-bottom: 1px solid #2f353b;
+    border-radius: 5px;
+}
+
+.single-div-download:hover {
+    background-color: #a77e7e;
+    border-color: #a77e7e;
+    color: #eee;
+}

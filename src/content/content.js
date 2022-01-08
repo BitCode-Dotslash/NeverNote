@@ -188,7 +188,7 @@ async function displayMeaning(word) {
 
                 container.innerHTML = `<p style="margin:1vh"><b >Root Word : </b>${meaning.word}</p>`;
 
-                $("#extension #meaningDiv #selectedWord").append(container);
+                $("#extension #meaningDiv #selectedWord").html(container);
 
                 var currentWord = {
                     word: meaning.word,

@@ -243,12 +243,10 @@ async function displayMeaning(word) {
 
                     currentWord.meanings.push({
                         partOfSpeech: item.partOfSpeech,
-                        definitions: {
-                            meaning: item.definitions[0].definition,
-                            synonyms: item.definitions[0].synonyms,
-                            antonyms: item.definitions[0].antonyms,
-                            examples: item.definitions[0].example,
-                        },
+                        definition: item.definitions[0].definition,
+                        synonyms: splitArray,
+                        antonyms: item.definitions[0].antonyms,
+                        examples: item.definitions[0].example,
                     });
 
                     container.appendChild(innerContainer);

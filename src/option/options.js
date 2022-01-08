@@ -1,55 +1,69 @@
-
-
-chrome.storage.sync.get(['vocab'], function (result) {
+chrome.storage.sync.get(["vocab"], function (result) {
     var vocab = result.vocab;
-    
+
     var dictionaryDiv = document.createElement("div");
     vocab.forEach((element) => {
-
         console.log(element);
         var wordDiv = document.createElement("div");
 
-        var wordPara = document .createElement("h1");
+        var wordPara = document.createElement("h3");
+
         wordPara.innerHTML = element.word;
         wordDiv.appendChild(wordPara);
 
         var meaningDiv = document.createElement("div");
 
         console.log(element.meanings);
-        element.meanings.forEach((meaning) => {
-            console.log(meaning);
+        element.meanings.forEach((item) => {
+            console.log(item);
             var container = document.createElement("div");
+            container.classList.add("meaning-container");
 
-            var partOfSpeech = document.createElement("p");
-            partOfSpeech.innerHTML = "<span>Part of Speech:" + meaning.partOfSpeech +"</span>";
+            var partOfSpeech = document.createElement("div");
+            partOfSpeech.innerHTML = "<i> " + item.partOfSpeech + "</i>";
             container.appendChild(partOfSpeech);
 
-            
-            var def = document.createElement("p");
-            def.innerHTML = "<span>Meaning: " + meaning.definitions.meaning +"</span>";
-            container.appendChild(def);
+            var innerContainer = document.createElement("div");
+            innerContainer.classList.add("meaning-inner-container");
+            var def = document.createElement("div");
+            def.innerHTML =
+                "<span ><b>Meaning:</b> " + item.definition + "</span>";
+            innerContainer.appendChild(def);
+            var synonym = document.createElement("div");
+            let splitArray = item.synonyms.splice(
+                0,
+                Math.min(4, item.synonyms.length)
+            );
+            if (splitArray.length > 0) {
+                synonym.innerHTML =
+                    "<span ><b>Synonym:</b> " +
+                    splitArray.join(", ") +
+                    "</span>";
+                innerContainer.appendChild(synonym);
+            }
+            if (item.antonyms.length > 0) {
+                var Antonym = document.createElement("div");
+                Antonym.innerHTML =
+                    "<span ><b>Antonym:</b> " +
+                    item.antonyms.join(", ") +
+                    "</span>";
+                innerContainer.appendChild(Antonym);
+            }
+            if (item.example) {
+                var example = document.createElement("div");
+                example.innerHTML =
+                    "<span ><b>Examples:</b> " + item.example + "</span>";
+                innerContainer.appendChild(example);
+            }
 
-            var synonym = document.createElement("p");
-            synonym.innerHTML = "<span>Synonym: " + meaning.definitions.synonyms +"</span>";
-            container.appendChild(synonym);
-
-            var Antonym = document.createElement("p");
-            Antonym.innerHTML = "<span>Antonym: " + meaning.definitions.antonyms +"</span>";
-            container.appendChild(Antonym);
-
-            var example = document.createElement("p");
-            example.innerHTML = "<span>Examples: " + meaning.definitions.example +"</span>";
-            container.appendChild(example);
-
+            container.appendChild(innerContainer);
             meaningDiv.appendChild(container);
-
-        })
+        });
 
         wordDiv.appendChild(meaningDiv);
 
         dictionaryDiv.appendChild(wordDiv);
     });
-      
+
     $("#content").html(dictionaryDiv);
-    
 });

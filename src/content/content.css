@@ -1,12 +1,6 @@
 * {
     border: none;
     margin: 0;
-    font-family: sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 20px;
 }
 
 .main-div {
@@ -22,6 +16,12 @@
     opacity: 0.9;
     border-radius: 5px;
     box-shadow: #79794b 0px 0px 10px;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .location-bottom-right {

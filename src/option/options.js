@@ -5,11 +5,9 @@ chrome.storage.sync.get(["vocab"], function (result) {
     vocab.forEach((element) => {
         console.log(element);
         var wordDiv = document.createElement("div");
+        wordDiv.classList.add('container')
 
-        var wordPara = document.createElement("h3");
-
-        wordPara.innerHTML = element.word;
-        wordDiv.appendChild(wordPara);
+        wordDiv.innerHTML = `<p style="margin:1vh;font-size:20px"><b >${element.word}</b></p>`
 
         var meaningDiv = document.createElement("div");
 
@@ -17,9 +15,10 @@ chrome.storage.sync.get(["vocab"], function (result) {
         element.meanings.forEach((item) => {
             console.log(item);
             var container = document.createElement("div");
-            container.classList.add("meaning-container");
+            container.classList.add("meaning-container", "ms-4", "mb-2");
 
             var partOfSpeech = document.createElement("div");
+            partOfSpeech.classList.add("ms-3");
             partOfSpeech.innerHTML = "<i> " + item.partOfSpeech + "</i>";
             container.appendChild(partOfSpeech);
 

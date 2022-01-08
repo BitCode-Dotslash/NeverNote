@@ -1,0 +1,28 @@
+.heading {
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.logo {
+    max-width: 50px;
+    max-height: 90px;
+    height: auto;
+    width: auto;
+}
+
+.name{
+    color: #2f353b;
+    font-family: 'Balsamiq Sans', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.meaning-container {
+    background-color: #eed6c4;
+    border-radius: 5px;
+    margin: 1vh;
+    padding: 1vh;
+}
+
+.meaning-inner-container {
+    margin-left: 3vh;
+}

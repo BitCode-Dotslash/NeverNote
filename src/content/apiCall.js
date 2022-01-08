@@ -71,7 +71,7 @@ function callTranslateAPI(translateFrom, translateTo, text) {
   }
   
   //Meaning api call
-  function callMeaningAPI(word){
+  async function callMeaningAPI(word){
       //call API
       var requestOptions = {
         method: 'GET',
@@ -79,32 +79,18 @@ function callTranslateAPI(translateFrom, translateTo, text) {
       };
 
       console.log(word);
-      fetch("https://api.dictionaryapi.dev/api/v2/entries/en/"+word, requestOptions)
+
+      return new Promise((resolve, reject) => {
+        fetch("https://api.dictionaryapi.dev/api/v2/entries/en/"+word, requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-      
-      return "This is the meaning API";
+        .then(result => {
+            console.log(JSON.parse(result)[0]);
+            resolve(JSON.parse(result)[0]);
+        })
+        .catch(error => {
+            reject(error)
+        });
+      })
     }
-    
-  //Synonym api call
-    function callSynonymAPI(word){
-      //call API
-      console.log(word);
-      return "This is the Synonym API";
-    }
-    
-  //antonym api call
-  function callAntonymAPI(word){
-      //call API
-      console.log(word);
-      return "This is the Antonym API";
-  }
     
   
-  // Example api call
-  function callExampleAPI(word){
-      //call API
-      console.log(word);
-      return "This is the Example API";
-  }

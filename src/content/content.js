@@ -61,7 +61,7 @@ function translateButtonActivity(text) {
             "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
         ).val();
 
-        if (translateTo !== "")
+        if (translateTo !== "" && translateFrom !== "")
             callTranslateAPI(translateFrom, translateTo, text).then(
                 (translatedText) => {
                     $("#extension #translateDiv #translatedText").html(
@@ -99,24 +99,36 @@ function addToNotesButtonActivity(text) {
 }
 
 function saveToNotes(text) {
-    $("#extension #addToNotesDiv #notesSelectionForm").submit(function (event) {
+    $("#extension #addToNotesDiv #notesSelectionForm #addToNoteSubmit").on("click", function (event) {
         event.preventDefault();
         var selectedNotebook = $(
-            "#extension #addToNotesDiv #notesSelectionForm #select_note"
+            "#extension #addToNotesDiv #notesSelectionForm input[name=selectNote]"
         ).val();
         console.log(selectedNotebook);
-        chrome.storage.sync.get(["notes"], function (result) {
-            var notes = result.notes;
-            console.log(notes);
-            var notebookContent = notes[selectedNotebook];
-            console.log(typeof notebookContent);
-            console.log(notebookContent);
-            notebookContent.push(text);
-            console.log(notebookContent);
-            notes[selectedNotebook] = notebookContent;
-            console.log(notes);
-            chrome.storage.sync.set({ notes: notes });
-        });
+        if(selectedNotebook !== ""){
+            chrome.storage.sync.get(["notes"], function (result) {
+                var notes = result.notes;
+                console.log(notes);
+                var notebookContent = notes[selectedNotebook];
+                console.log(typeof notebookContent);
+                console.log(notebookContent);
+                
+                if(!notebookContent){
+                    notes[selectedNotebook] = [];
+                    notebookContent = notes[selectedNotebook];   
+                }
+
+                notebookContent.push(text);
+                console.log(notebookContent);
+                notes[selectedNotebook] = notebookContent;
+                console.log(notes);
+                
+                chrome.storage.sync.set({ notes: notes });
+            });
+        }else{
+            alert("Select valid title");
+        }
+        
     });
 }
 

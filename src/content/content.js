@@ -1,49 +1,52 @@
 console.log("Content Script at Work");
 
+// var automate;
+
+// chrome.storage.sync.get(["automate"], function (result) {
+//   automate = result.automate;
+// });
+
 //function to create extension container to display
 async function createExtensionContainer() {
-    //create container
-    console.log("add container");
-    var extensionContainer = document.createElement("div");
-    extensionContainer.id = "extensionContainer";
-    extensionContainer.style.cssText =
-        "position:absolute;top:0;right:0;width:auto;height:auto;opacity:1;z-index:1000000;background-color:pink;";
-    document.body.appendChild(extensionContainer);
+  //create container
+  console.log("add container");
+  var extensionContainer = document.createElement("div");
+  extensionContainer.id = "extensionContainer";
+  extensionContainer.style.cssText =
+    "position:absolute;top:0;right:0;width:auto;height:auto;opacity:1;z-index:1000000;background-color:pink;";
+  document.body.appendChild(extensionContainer);
 
-    return new Promise(async (resolve, reject) => {
-        try {
-            //get HTML data
-            console.log("add container data");
-            var htmlURL = chrome.runtime.getURL("/src/content/content.html");
-            var htmlContent = await $.get(htmlURL);
-            $("#extensionContainer").html(htmlContent);
-            resolve();
-        } catch (err) {
-            reject(err);
-        }
-    });
+  return new Promise(async (resolve, reject) => {
+    try {
+      //get HTML data
+      console.log("add container data");
+      var htmlURL = chrome.runtime.getURL("/src/content/content.html");
+      var htmlContent = await $.get(htmlURL);
+      $("#extensionContainer").html(htmlContent);
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
 }
 
 //function to display search Dictionary button or not
 function displaySearchDictionaryButton(isWord) {
-    if (isWord) {
-        $("#extension #meaningButton").css("display", "block");
-        $("#selectedText").addClass("single-word");
-    } else {
-        $("#extension #meaningButton").css("display", "none");
-        $("#selectedText").removeClass("single-word");
-    }
+  if (isWord) {
+    $("#extension #meaningButton").css("display", "block");
+    $("#selectedText").addClass("single-word");
+  } else {
+    $("#extension #meaningButton").css("display", "none");
+    $("#selectedText").removeClass("single-word");
+  }
 }
-
 
 //function to add translate button activity
 function translateButtonActivity(text) {
   $("#extension #translateTextButton").on("click", function () {
     $("#extension #translateDiv").css("display", "block");
     $("#extension #meaningDiv").css("display", "none");
-    
   });
-
 
   $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
     function (event) {
@@ -57,43 +60,43 @@ function translateButtonActivity(text) {
         "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
       ).val();
 
-      callTranslateAPI(translateFrom, translateTo, text).then((translatedText) => {
-        $("#extension #translateDiv #translatedText").html(translatedText);
-      })
-
+      callTranslateAPI(translateFrom, translateTo, text).then(
+        (translatedText) => {
+          $("#extension #translateDiv #translatedText").html(translatedText);
+        }
+      );
     }
   );
 }
 
 //function to display meaning, antonym, synonym, and example of given word
 async function displayMeaning(word) {
-    var meaning = callMeaningAPI(word);
-    var synonym = callSynonymAPI(word);
-    var antonym = callAntonymAPI(word);
-    var example = callExampleAPI(word);
+  var meaning = callMeaningAPI(word);
+  var synonym = callSynonymAPI(word);
+  var antonym = callAntonymAPI(word);
+  var example = callExampleAPI(word);
 
-    console.log(word, meaning, synonym, antonym);
-    $("#extension #meaningDiv #selectedWord").text(word);
-    $("#extension #meaningDiv #wordMeaning").text(meaning);
-    $("#extension #meaningDiv #wordSynonym").text(synonym);
-    $("#extension #meaningDiv #wordAntonym").text(antonym);
-    $("#extension #meaningDiv #wordExamples").text(example);
+  console.log(word, meaning, synonym, antonym);
+  $("#extension #meaningDiv #selectedWord").text(word);
+  $("#extension #meaningDiv #wordMeaning").text(meaning);
+  $("#extension #meaningDiv #wordSynonym").text(synonym);
+  $("#extension #meaningDiv #wordAntonym").text(antonym);
+  $("#extension #meaningDiv #wordExamples").text(example);
 
+  var currentWord = {
+    word: word,
+    meaning: meaning,
+    synonym: synonym,
+    antonym: antonym,
+    example: example,
+  };
 
-    var currentWord = {
-        word: word,
-        meaning: meaning,
-        synonym: synonym,
-        antonym: antonym,
-        example: example
-    };
-
-    await chrome.storage.sync.set({currentWord: currentWord});
+  await chrome.storage.sync.set({ currentWord: currentWord });
 }
 
 //function to add meaning button activity
 function meaningButtonActivity(text) {
-    $("#extension #meaningButton").on("click", function () {
+  $("#extension #meaningButton").on("click", function () {
     $("#extension #translateDiv").css("display", "none");
     $("#extension #meaningDiv").css("display", "block");
     displayMeaning(text);
@@ -129,19 +132,28 @@ $(document).mouseup(async function (event) {
       .catch((err) => {
         console.log(err);
       });
-  }
-});
+  } else if (event.shiftKey && automate && window.getSelection) {
+    var selectedPart = window.getSelection();
 
+    console.log("auto");
+
+    callTranslateAPI("en", "hi", selectedPart.toString()).then(
+      (translatedText) => {
+        console.log("auto2");
+        selectedPart.anchorNode.data = translatedText;
+      }
+    );
+  }
+
+  console.log(automate);
+});
 
 //remove extension container when user clicks outside the div
 $(document).mousedown(function (event) {
-    var container = $("#extensionContainer");
+  var container = $("#extensionContainer");
 
-    // if the target of the click isn't the container nor a descendant of the container
-    if (
-        !container.is(event.target) &&
-        container.has(event.target).length === 0
-    ) {
-        container.remove();
-    }
+  // if the target of the click isn't the container nor a descendant of the container
+  if (!container.is(event.target) && container.has(event.target).length === 0) {
+    container.remove();
+  }
 });

@@ -1,0 +1,27 @@
+html, 
+body {
+    height: 100px;
+    width: 300px;
+}
+
+.container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding:10px
+}
+
+.logo{
+    height: auto;
+    display: inline
+}
+
+.name{
+    display: inline;
+    vertical-align:middle;
+}
+
+.name h1{
+    vertical-align: middle;
+}
+

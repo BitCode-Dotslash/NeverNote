@@ -12,7 +12,14 @@
 
 <body>
 
-    <h1>NeverNote</h1>
+    <div class="container">
+        <img class="logo" src="/images/logo_crop.png" />
+        <div class="name">
+            <h1>NeverNote</h1>
+        </div>
+    </div>
+
+
     <button id="createNotebook">Create Notebook</button>
     <button id="downloadNotebook">Download Notebook</button>
     <button id="optionsButton">Show Vocabulary</button>
@@ -32,12 +39,12 @@
         <div id="noNotebooksFound" style="display: none;">You do not have any notebook</div>
     </div>
 
-    
+
 
 
     <!-- js files -->
     <script src="./../content/jquery.min.js"></script>
-    <script src="./../content/jspdf.min.js"></script> 
+    <script src="./../content/jspdf.min.js"></script>
     <script src="./../content/FileSaver.min.js"></script>
     <script src="imgData.js"></script>
     <script src="popup.js"></script>

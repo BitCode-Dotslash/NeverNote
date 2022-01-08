@@ -1,9 +1,8 @@
 //print functionality on click buttons
 function printFunctionality() {
-    $("#downloadNotebookDiv div").on("click", function (event) {
-        console.log(event);
-        console.log(event.target.id);
-        var notebook = event.target.id;
+    $("#downloadNotebookDiv div img.download").on("click", function (event) {
+        console.log(event.target.id.split('-'));
+        var notebook = event.target.id.split('-')[0];
         chrome.storage.sync.get(["notes"], function (result) {
             var notes = result.notes;
             var notebookContent = notes[notebook];
@@ -68,6 +67,21 @@ function printFunctionality() {
             doc.save(notebook + ".pdf");
         });
     });
+}
+
+function deleteFunctionality(){
+    $("#downloadNotebookDiv div img.delete").on("click", function(event) {
+        console.log(event.target.id.split('-'));
+        var notebook = event.target.id.split('-')[0];
+        chrome.storage.sync.get(['notes'], function(result) {
+            var notes = result.notes;
+            console.log(notes);
+            delete notes[notebook];
+            console.log(notes);
+            chrome.storage.sync.set({notes: notes});
+            $("#downloadNotebookDiv").css("display", "none");
+        })
+    })
 }
 
 // display create notebook section on click create notebook button
@@ -150,7 +164,7 @@ $("#downloadNotebook").on("click", function () {
                 downloadLink.id = notebook;
                 downloadLink.innerHTML = `<div>${
                     index + 1
-                }. ${notebook}</div><div> <img id='${notebook}-download' class='me-3' src="https://img.icons8.com/material-rounded/24/000000/download--v1.png"/> <img id='${notebook}-delete' src="https://img.icons8.com/ios-glyphs/24/000000/filled-trash.png"/></div>`;
+                }. ${notebook}</div><div> <img id='${notebook}-download' class='download me-3' src="https://img.icons8.com/material-rounded/24/000000/download--v1.png"/> <img id='${notebook}-delete' class="delete" src="https://img.icons8.com/ios-glyphs/24/000000/filled-trash.png"/></div>`;
                 container.appendChild(downloadLink);
             });
 
@@ -164,5 +178,6 @@ $("#downloadNotebook").on("click", function () {
         $("#downloadNotebookDiv").css("display", "block");
 
         printFunctionality();
+        deleteFunctionality();
     });
 });

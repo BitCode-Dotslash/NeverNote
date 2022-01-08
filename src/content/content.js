@@ -142,6 +142,10 @@ function saveToNotes(text) {
                     console.log(typeof notebookContent);
                     console.log(notebookContent);
 
+                    if (!notebookContent) {
+                        notes[selectedNotebook] = [];
+                        notebookContent = notes[selectedNotebook];
+                    }
                     notebookContent.push(text);
                     console.log(notebookContent);
                     notes[selectedNotebook] = notebookContent;

@@ -1,10 +1,10 @@
 //print functionality on click buttons
-function printFunctionality(){
-    $("#downloadNotebookDiv button").on("click", function (event) {
+function printFunctionality() {
+    $("#downloadNotebookDiv div").on("click", function (event) {
         console.log(event);
         console.log(event.target.id);
         var notebook = event.target.id;
-        chrome.storage.sync.get(['notes'], function(result) {
+        chrome.storage.sync.get(["notes"], function (result) {
             var notes = result.notes;
             var notebookContent = notes[notebook];
             console.log(notebookContent);
@@ -14,21 +14,26 @@ function printFunctionality(){
             doc.setFillColor(221, 221, 221);
             doc.setLineWidth(1.5);
             doc.rect(0, 0, 220, 60, "F");
-            doc.addImage(imgData, 'PNG', 20, 6, 46, 46);
+            doc.addImage(imgData, "PNG", 20, 6, 46, 46);
 
             doc.setLineWidth(1);
-            doc.setDrawColor(117,53,53);
+            doc.setDrawColor(117, 53, 53);
             doc.line(10, 60, 200, 60);
 
             doc.setFontSize(37);
 
-            doc.setFont('helvetica');
-            doc.setFontType('bold');
-            doc.text(notebook.charAt(0).toUpperCase() + notebook.slice(1), 190, 28, "right");
+            doc.setFont("helvetica");
+            doc.setFontType("bold");
+            doc.text(
+                notebook.charAt(0).toUpperCase() + notebook.slice(1),
+                190,
+                28,
+                "right"
+            );
 
             doc.setFontSize(17);
-            doc.setFont('times');
-            doc.setFontType('italic');
+            doc.setFont("times");
+            doc.setFontType("italic");
 
             var script = notebookContent.join("\r\n\r\n");
 
@@ -50,9 +55,9 @@ function printFunctionality(){
                     var width = doc.getTextWidth(name);
                     var conversation = res[1];
 
-                    doc.setFontType('bold');
+                    doc.setFontType("bold");
                     doc.text(10, y, name);
-                    doc.setFontType('normal');
+                    doc.setFontType("normal");
                     doc.text(15 + width, y, conversation);
                 } else {
                     doc.text(30, y, splitText[i]);
@@ -61,96 +66,92 @@ function printFunctionality(){
             }
 
             doc.save(notebook + ".pdf");
-
-        })
-    })
+        });
+    });
 }
-
-
 
 // display create notebook section on click create notebook button
 $("#createNotebook").on("click", function () {
-  $("#createNotebookDiv").css("display", "block");
-  $("#downloadNotebookDiv").css("display", "none");
-  $("#downloadNotebook").addClass('active');
-  $("#createNotebook").removeClass('active');
-  $("#createNotebookDiv #createNotebookForm button").prop("disabled", true);
+    $("#createNotebookDiv").css("display", "block");
+    $("#downloadNotebookDiv").css("display", "none");
+    $("#downloadNotebook").addClass("active");
+    $("#createNotebook").removeClass("active");
+    $("#createNotebookDiv #createNotebookForm button").prop("disabled", true);
 });
 
 //check for valid notebook name (unique name)
 $("#createNotebookDiv input#notebookName").keyup(function () {
-  var inputText = $(this).val();
-  // console.log(inputText);
-  chrome.storage.sync.get(["notes"], function (result) {
-    var notebooks = Object.keys(result.notes);
-    var found = notebooks.indexOf(inputText);
-    // console.log(found);
-    if (found == -1) {
-      $("#createNotebookDiv input#notebookName").css({
-        border: "5px solid green",
-      });
-      $("#createNotebookDiv input#notebookName").css({
-        "background-color": "green",
-      });
-      $("#createNotebookDiv #createNotebookForm button").prop(
-        "disabled",
-        false
-      );
-      // console.log("undefined");
-    } else {
-      $("#createNotebookDiv input#notebookName").css({
-        border: "5px solid red",
-      });
-      $("#createNotebookDiv input#notebookName").css({
-        "background-color": "red",
-      });
-      $("#createNotebookDiv #createNotebookForm button").prop("disabled", true);
-      // console.log("defined");
-    }
-  });
+    var inputText = $(this).val();
+    // console.log(inputText);
+    chrome.storage.sync.get(["notes"], function (result) {
+        var notebooks = Object.keys(result.notes);
+        var found = notebooks.indexOf(inputText);
+        // console.log(found);
+        if (found == -1) {
+            $("#createNotebookDiv input#notebookName").css({
+                color: "green",
+                border: "3px solid green",
+            });
+            $("#createNotebookDiv #createNotebookForm button").prop(
+                "disabled",
+                false
+            );
+            // console.log("undefined");
+        } else {
+            $("#createNotebookDiv input#notebookName").css({
+                color: "red",
+                border: "3px solid red",
+            });
+            $("#createNotebookDiv #createNotebookForm button").prop(
+                "disabled",
+                true
+            );
+            // console.log("defined");
+        }
+    });
 });
 
 //create notebook form submit event
-$("#createNotebookDiv #createNotebookForm").submit(function (event) {
-  event.preventDefault();
-  var newNotebook = $("#createNotebookDiv input#notebookName").val();
-  $(this).closest("form").find("input[type=text], textarea").val("");
-  $("#createNotebookDiv").css("display", "none");
-  chrome.storage.sync.get(["notes"], function (result) {
-    var notes = result.notes;
-    notes[newNotebook] = [];
-    chrome.storage.sync.set({ notes: notes });
-  });
+$("#createNotebookDiv #createNotebookImg").on("click", function (event) {
+    event.preventDefault();
+    var newNotebook = $("#createNotebookDiv input#notebookName").val();
+    $(this).closest("form").find("input[type=text], textarea").val("");
+    $("#createNotebookDiv").css("display", "none");
+    chrome.storage.sync.get(["notes"], function (result) {
+        var notes = result.notes;
+        notes[newNotebook] = [];
+        chrome.storage.sync.set({ notes: notes });
+    });
 });
 
 chrome.storage.sync.get(["optionsUrl"], function (result) {
-  $("#optionsButton").on("click", function () {
-    chrome.tabs.create({
-      url: result.optionsUrl,
+    $("#optionsButton").on("click", function () {
+        chrome.tabs.create({
+            url: result.optionsUrl,
+        });
     });
-  });
 });
 
-$("#downloadNotebook").on("click", function(){
-    $("#downloadNotebook").addClass('active');
-    $("#createNotebook").removeClass('active');
-    chrome.storage.sync.get(['notes'], function(result){
+$("#downloadNotebook").on("click", function () {
+    $("#downloadNotebook").addClass("active");
+    $("#createNotebook").removeClass("active");
+    chrome.storage.sync.get(["notes"], function (result) {
         var notes = Object.keys(result.notes);
-        console.log(notes.length);
-        if(notes.length>0){
-          console.log("notes Available");
+        console.log(notes);
+        if (notes.length > 0) {
+            console.log("notes Available");
             $("#noNotebooksFound").css("display", "none");
             var container = document.createElement("div");
 
-            notes.forEach((notebook) => {
-                var downloadLink = document.createElement("button");
+            notes.forEach((notebook, index) => {
+                var downloadLink = document.createElement("div");
                 downloadLink.id = notebook;
-                downloadLink.innerText = notebook;
+                downloadLink.innerHTML = `${index + 1}. ${notebook}`;
                 container.appendChild(downloadLink);
-            })
+            });
 
             $("#downloadNotebookDiv").append(container);
-        }else{
+        } else {
             console.log("No notes found");
             $("#noNotebooksFound").css("display", "block");
         }
@@ -159,6 +160,5 @@ $("#downloadNotebook").on("click", function(){
         $("#downloadNotebookDiv").css("display", "block");
 
         printFunctionality();
-
-    })
-})
+    });
+});

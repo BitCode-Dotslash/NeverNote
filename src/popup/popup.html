@@ -1,85 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- css files -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./../../bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="popup.css" />
+    </head>
 
-    <!-- css files -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./../../bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="popup.css">
-</head>
-
-<body>
-
-
-    <div class="p-3 container">
-        
-            <div class=" pb-2 container border-secondary border-bottom border-1">
+    <body>
+        <div class="p-3 container">
+            <div class="pb-2 container border-secondary border-bottom border-1">
                 <div class="row">
                     <div class="px-1 col-4">
-                        <img class="logo ms-auto d-block" src="/images/logo2.png" />
+                        <img
+                            class="logo ms-auto d-block"
+                            src="/images/logo2.png"
+                        />
                     </div>
                     <div class="px-0 col-8">
                         <p class="fw-bolder mt-4 mb-0 name">NeverNote</p>
                     </div>
-                </div>   
+                </div>
             </div>
             <div class="container">
                 <div class="row my-4">
                     <div class="col-12 text-center">
-                        <button class="btn-custom" id="optionsButton">Show Vocabulary</button>
+                        <button class="btn-custom" id="optionsButton">
+                            Show Vocabulary
+                        </button>
                     </div>
                 </div>
                 <div class="row my-4">
                     <div class="col-6 text-center">
-                        <button class="btn-custom" id="createNotebook">Create Notebook</button>
+                        <button class="btn-custom" id="createNotebook">
+                            Create Notebook
+                        </button>
                     </div>
                     <div class="col-6 text-center">
-                        <button class="btn-custom" id="downloadNotebook">Download Notebook</button>
+                        <button class="btn-custom" id="downloadNotebook">
+                            Download Notebook
+                        </button>
                     </div>
                 </div>
-                
             </div>
-        
-        
+
             <div class="container">
                 <!-- create Notebook section -->
-                <div id="createNotebookDiv" style="display: none;">
-                    <form id="createNotebookForm">
-                        <label for="create Notebook">Notebook Name</label>
-                        <input type="text" id="notebookName" name="notebookName" required>
-                        <button type="submit" class="btn-custom">Create</button>
+                <div id="createNotebookDiv" style="display: none">
+                    <form
+                        id="createNotebookForm"
+                        style="display: flex; align-items: flex-end"
+                    >
+                        <input
+                            type="text"
+                            id="notebookName"
+                            name="notebookName"
+                            placeholder="Notebook Title"
+                            style="
+                                height: 30px;
+                                padding: 5px;
+                                margin-right: 10px;
+                            "
+                            required
+                        />
+                        <div id="createNotebookImg">
+                            <img
+                                src="https://img.icons8.com/ios/35/000000/create-new.png"
+                            />
+                        </div>
                     </form>
                 </div>
-            
+
                 <!-- create Notebook section -->
-                <div id="downloadNotebookDiv" style="display: none;">
-                    <div id="noNotebooksFound" style="display: none;">You do not have any notebook</div>
+                <div
+                    id="downloadNotebookDiv"
+                    style="display: none"
+                    class="notelist"
+                >
+                    <div id="noNotebooksFound" style="display: none">
+                        You do not have any notebook
+                    </div>
                 </div>
             </div>
-            
-        
-        
-            
-        
-    </div>
-    
-    
+        </div>
 
-
-
-    <!-- js files -->
-    <script src="./../../bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="./../content/jquery.min.js"></script>
-    <script src="./../content/jspdf.min.js"></script>
-    <script src="./../content/FileSaver.min.js"></script>
-    <script src="imgData.js"></script>
-    <script src="popup.js"></script>
-</body>
-
+        <!-- js files -->
+        <script src="./../../bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="./../content/jquery.min.js"></script>
+        <script src="./../content/jspdf.min.js"></script>
+        <script src="./../content/FileSaver.min.js"></script>
+        <script src="imgData.js"></script>
+        <script src="popup.js"></script>
+    </body>
 </html>

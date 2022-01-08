@@ -33,6 +33,41 @@ function displaySearchDictionaryButton(isWord) {
   }
 }
 
+//translate api call
+function callTranslateAPI(translateFrom, translateTo) {
+  console.log(translateFrom, translateTo);
+  return "Text is Translated";
+}
+
+//function to add translate button activity
+function translateButtonActivity() {
+  $("#extension #translateTextButton").on("click", function () {
+    $("#extension #translateDiv").css("display", "block");
+    $("#extension #meaningDiv").css("display", "none");
+    $("#extension #synonymDiv").css("display", "none");
+    $("#extension #antonymDiv").css("display", "none");
+  });
+
+  $("#extension #translateDiv #selectLanguage #languageSelectionForm").submit(
+    function (event) {
+      event.preventDefault();
+
+      var translateFrom = $(
+        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_from"
+      )
+        .find(":selected")
+        .text();
+      var translateTo = $(
+        "#extension #translateDiv #selectLanguage #languageSelectionForm #translate_to"
+      )
+        .find(":selected")
+        .text();
+      var translatedText = callTranslateAPI(translateFrom, translateTo);
+      $("#extension #translateDiv #translatedText").html(translatedText);
+    }
+  );
+}
+
 // display container on right side on ctrl + Selection event
 $(document).mouseup(async function (event) {
   if ((event.ctrlKey || event.metaKey) && window.getSelection) {
@@ -58,6 +93,7 @@ $(document).mouseup(async function (event) {
         console.log("containerAdded");
 
         displaySearchDictionaryButton(isWord);
+        translateButtonActivity();
 
         $("#extension #selectedText").html(selectedText);
         console.log($("#extension"));

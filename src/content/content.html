@@ -7,4 +7,30 @@
   <button id="translateTextButton">Translate</button>
   <button id="meaningButton" style="display: none;">Search in dictionary</button>
 
+  <div id="translateDiv" style="display: none;">
+    <div id="selectLanguage">
+      <form id="languageSelectionForm">
+        <label for="translate_from">from:</label>
+        <select name="translate_from" id="translate_from" required>
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+        </select>
+        <label for="translate_to">to:</label>
+        <select name="translate_to" id="translate_to" required>
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+        </select>
+        <button type="submit">translate</button>
+      </form>
+    </div>
+
+    <div id="translatedText">
+    </div>
+  </div>
+
+
 </div>

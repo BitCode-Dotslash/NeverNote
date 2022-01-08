@@ -82,8 +82,16 @@ async function displayMeaning(word) {
             $("#extension #meaningDiv #meaningNotFound").css("display", "none");
             $("#extension #meaningDiv #meaningFound").css("display", "block");
             $("#extension #meaningDiv #selectedWord").text(meaning.word);
+
+            var currentWord = {
+                "word": meaning.word ,
+                "meanings": []
+            }
+
+
             meaning = meaning.meanings;
             console.log(meaning);
+            
             meaning.forEach((item) => {
                 console.log(item);
                 var container = document.createElement("div");
@@ -109,46 +117,55 @@ async function displayMeaning(word) {
                 example.innerHTML = "<span>Examples: " + item.definitions[0].example +"</span>";
                 container.appendChild(example);
 
+                currentWord.meanings.push({
+                    "partOfSpeech": item.partOfSpeech,
+                    "definitions": {
+                        "meaning": item.definitions[0].definition,
+                        "synonyms": item.definitions[0].synonyms,
+                        "antonyms": item.definitions[0].antonyms,
+                        "examples": item.definitions[0].example
+                    }
+                });
+
                 meaningDiv.appendChild(container);
             })
 
             $("#extension #meaningDiv #meaningFound").html(meaningDiv);
+            $("#extension #meaningDiv #addToVocab").css("display", "block");
+            chrome.storage.sync.set({currentWord: currentWord});
+
         }else{
             $("#extension #meaningDiv #meaningFound").css("display", "none");
+            $("#extension #meaningDiv #addToVocab").css("display", "none");
             $("#extension #meaningDiv #meaningNotFound").css("display", "block");
+
         }
 
     }).catch((err) => {
         console.log(err);
     });
-    
-    
-
-    // console.log(word, meaning, synonym, antonym);
-    
-    // $("#extension #meaningDiv #wordMeaning").text(meaning);
-    // $("#extension #meaningDiv #wordSynonym").text(synonym);
-    // $("#extension #meaningDiv #wordAntonym").text(antonym);
-    // $("#extension #meaningDiv #wordExamples").text(example);
-
-
-    // var currentWord = {
-    //     word: word,
-    //     meaning: meaning,
-    //     synonym: synonym,
-    //     antonym: antonym,
-    //     example: example
-    // };
-
-    // await chrome.storage.sync.set({currentWord: currentWord});
 }
 
 //function to add meaning button activity
 function meaningButtonActivity(text) {
     $("#extension #meaningButton").on("click", function () {
         $("#extension #translateDiv").css("display", "none");
-        $("#extension #meaningDiv").css("display", "block");
         displayMeaning(text);
+        $("#extension #meaningDiv").css("display", "block");
+
+        $("#extension #meaningDiv #addToVocab").on("click", function(){
+            chrome.storage.sync.get(['currentWord'], function(wordResult) {
+              chrome.storage.sync.get(['vocab'], async function(vocabResult) {
+                  var vocab = vocabResult.vocab;
+                  console.log(vocab);
+                  var currentWord = wordResult.currentWord;
+                  console.log(currentWord);
+                  vocab.push(currentWord);
+                  console.log(vocab);
+                  await chrome.storage.sync.set({vocab: vocab});
+              });
+            });
+          });
     });
 }
 

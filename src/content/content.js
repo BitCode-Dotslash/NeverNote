@@ -75,28 +75,72 @@ function speechButtonActivity(text){
 
 //function to display meaning, antonym, synonym, and example of given word
 async function displayMeaning(word) {
-    var meaning = callMeaningAPI(word);
-    var synonym = callSynonymAPI(word);
-    var antonym = callAntonymAPI(word);
-    var example = callExampleAPI(word);
+    callMeaningAPI(word).then((meaning) => {
+        var meaningDiv = document.createElement("div");
+        console.log(meaning.word);
+        if(meaning.word){
+            $("#extension #meaningDiv #meaningNotFound").css("display", "none");
+            $("#extension #meaningDiv #meaningFound").css("display", "block");
+            $("#extension #meaningDiv #selectedWord").text(meaning.word);
+            meaning = meaning.meanings;
+            console.log(meaning);
+            meaning.forEach((item) => {
+                console.log(item);
+                var container = document.createElement("div");
 
-    console.log(word, meaning, synonym, antonym);
-    $("#extension #meaningDiv #selectedWord").text(word);
-    $("#extension #meaningDiv #wordMeaning").text(meaning);
-    $("#extension #meaningDiv #wordSynonym").text(synonym);
-    $("#extension #meaningDiv #wordAntonym").text(antonym);
-    $("#extension #meaningDiv #wordExamples").text(example);
+                var partOfSpeech = document.createElement("p");
+                partOfSpeech.innerHTML = "<span>Part of Speech:" + item.partOfSpeech +"</span>";
+                container.appendChild(partOfSpeech);
+
+                console.log(item.definitions[0]);
+                var def = document.createElement("p");
+                def.innerHTML = "<span>Meaning: " + item.definitions[0].definition +"</span>";
+                container.appendChild(def);
+
+                var synonym = document.createElement("p");
+                synonym.innerHTML = "<span>Synonym: " + item.definitions[0].synonyms +"</span>";
+                container.appendChild(synonym);
+
+                var Antonym = document.createElement("p");
+                Antonym.innerHTML = "<span>Antonym: " + item.definitions[0].antonyms +"</span>";
+                container.appendChild(Antonym);
+
+                var example = document.createElement("p");
+                example.innerHTML = "<span>Examples: " + item.definitions[0].example +"</span>";
+                container.appendChild(example);
+
+                meaningDiv.appendChild(container);
+            })
+
+            $("#extension #meaningDiv #meaningFound").html(meaningDiv);
+        }else{
+            $("#extension #meaningDiv #meaningFound").css("display", "none");
+            $("#extension #meaningDiv #meaningNotFound").css("display", "block");
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+    
+    
+
+    // console.log(word, meaning, synonym, antonym);
+    
+    // $("#extension #meaningDiv #wordMeaning").text(meaning);
+    // $("#extension #meaningDiv #wordSynonym").text(synonym);
+    // $("#extension #meaningDiv #wordAntonym").text(antonym);
+    // $("#extension #meaningDiv #wordExamples").text(example);
 
 
-    var currentWord = {
-        word: word,
-        meaning: meaning,
-        synonym: synonym,
-        antonym: antonym,
-        example: example
-    };
+    // var currentWord = {
+    //     word: word,
+    //     meaning: meaning,
+    //     synonym: synonym,
+    //     antonym: antonym,
+    //     example: example
+    // };
 
-    await chrome.storage.sync.set({currentWord: currentWord});
+    // await chrome.storage.sync.set({currentWord: currentWord});
 }
 
 //function to add meaning button activity

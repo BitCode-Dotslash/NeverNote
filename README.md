@@ -8,7 +8,7 @@ Let's look at an example to better understand the scenario. One pleasant day, yo
 **NeverNote** is a user-friendly chrome extension that makes it simple to absorb complex words and sentences and save them in one place for future reference. It also helps you keep track of your essential points in separate files. You can also save your vocabulary with various other information to grasp the words. You don't need to leave your tab because all of these features are available in your current window. Basically, it saves a lot of time when reading information on the internet.
 
 ## Need
-With the rapid advancement of technology, it is vital to adapt to the changing reality.. Reading technical stuffs from various research papers and articles is today's need. For beginners, understanding such high standard stuffs can be time consuming as the manual work flow takes time. Nevernote reduces this time to a certain extent, so that you dont distract from your regular workflow. Basically, it's a one-stop shop for smooth online reading.
+With the rapid advancement of technology, it is vital to adapt to the changing reality. Reading technical stuffs from various research papers and articles is today's need. For beginners, understanding such high standard stuffs can be time consuming as the manual work flow takes time. Nevernote reduces this time to a certain extent, so that you don't distract from your regular workflow. Basically, it's a one-stop shop for smooth online reading.
 
 ## Working
 Press ctrl key and select some word or sentence, as you finish your selection a dialogue box would appear with various features which you can use as per your convinience. All the vocabulary and notes that you save are always available to be downloaded in pdf format.
@@ -23,6 +23,27 @@ Press ctrl key and select some word or sentence, as you finish your selection a 
 
 ## Preview
 
+#####Translate functionality
+
+<img src="./images/preview/select-text.png" alt = "Select Text to get dialogue box"/>
+
+<img src="./images/preview/translate-text-3.png" alt ="translated text"/>
+<img src="./images/preview/add-to-notes.png" alt ="add to notes"/>
+#####Search in Dictionary
+<img src="./images/preview/word1.png" alt="search for word in dictionary"></img>
+
+#####Popup
+<img src="./images/preview/popup1.png" alt="popup"/>
+<img src="./images/preview/create-notebook.png" alt="create notebook"/>
+<img src="./images/preview/create-notebook-with-same-name.png" alt="create notebook already existing notebook"/>
+<img src="./images/preview/manage-notebook.png" alt="manage notebook">
+
+#####Vocabulary
+<img src="./images/preview/vocab.png" alt="vocabulary" />
+
+#####Notes PDF
+<img src="./images/preview/notes.png" alt="notes">
+
 ## Installation
 
 - **Fork and Clone** the repository.
@@ -35,6 +56,6 @@ Press ctrl key and select some word or sentence, as you finish your selection a 
 - **Pin the extension** for better experience.
 
 ## Authors
-- *Rutvij Vamj*: [RutivjDv](https://github.com/RutvijDv/)
+- *Rutvij Vamja*: [RutivjDv](https://github.com/RutvijDv/)
 - *Shrushti Vasaniya*: [Shrushti22](https://github.com/Shrushti22/)
 - *Yash Patel*: [y4sh-patel](https://github.com/Y4sh-patel/)

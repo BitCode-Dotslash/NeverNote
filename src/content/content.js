@@ -121,20 +121,6 @@ function addToNotesButtonActivity(text) {
             });
 
             $("#extension #addToNotesDiv").css("display", "block");
-            let dis = $("#extension #meaningDiv #addToNotesDone").css(
-                "display"
-            );
-            if (dis === "none") {
-                $("#extension #meaningDiv #addToNotesSubmit").css(
-                    "display",
-                    "block"
-                );
-            } else {
-                $("#extension #meaningDiv #addToNotesSubmit").css(
-                    "display",
-                    "none"
-                );
-            }
         });
     });
 }
@@ -166,16 +152,7 @@ function saveToNotes(text) {
                     console.log(notes);
 
                     chrome.storage.sync.set({ notes: notes });
-
-                    // $("#extension #addToNotesDiv").css("display", "none");
-                    $("#extension #meaningDiv #addToNotesDone").css(
-                        "display",
-                        "block"
-                    );
-                    $("#extension #meaningDiv #addToNotesSubmit").css(
-                        "display",
-                        "none"
-                    );
+                    $("#extension #addToNotesDiv").css("display", "none");
                 });
             } else {
                 alert("Select valid title");

@@ -23,25 +23,39 @@ Press ctrl key and select some word or sentence, as you finish your selection a 
 
 ## Preview
 
-#####Translate functionality
+#### Translate functionality
 
-<img src="./images/preview/select-text.png" alt = "Select Text to get dialogue box"/>
+<p align="center">
+<img style="margin:10px" src="./images/preview/select-text.png" alt = "Select Text to get dialogue box"/>
+<p align="center">CTRL+Selecting Text triggers extension</p>
+</p>
+</br>
 
+<p align="center">
 <img src="./images/preview/translate-text-3.png" alt ="translated text"/>
+<p align="center">Translate Text</p>
+</p>
+</br>
+
+<p align="center">
 <img src="./images/preview/add-to-notes.png" alt ="add to notes"/>
-#####Search in Dictionary
+<p align="center">Add To Notes</p>
+</p>
+</br>
+
+#### Search in Dictionary
 <img src="./images/preview/word1.png" alt="search for word in dictionary"></img>
 
-#####Popup
+#### Popup
 <img src="./images/preview/popup1.png" alt="popup"/>
 <img src="./images/preview/create-notebook.png" alt="create notebook"/>
 <img src="./images/preview/create-notebook-with-same-name.png" alt="create notebook already existing notebook"/>
 <img src="./images/preview/manage-notebook.png" alt="manage notebook">
 
-#####Vocabulary
+#### Vocabulary
 <img src="./images/preview/vocab.png" alt="vocabulary" />
 
-#####Notes PDF
+#### Notes PDF
 <img src="./images/preview/notes.png" alt="notes">
 
 ## Installation

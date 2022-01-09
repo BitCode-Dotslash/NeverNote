@@ -1,8 +1,8 @@
 //print functionality on click buttons
 function printFunctionality() {
     $("#downloadNotebookDiv div img.download").on("click", function (event) {
-        console.log(event.target.id.split('-'));
-        var notebook = event.target.id.split('-')[0];
+        console.log(event.target.id.split("-"));
+        var notebook = event.target.id.split("-")[0];
         chrome.storage.sync.get(["notes"], function (result) {
             var notes = result.notes;
             var notebookContent = notes[notebook];
@@ -69,19 +69,33 @@ function printFunctionality() {
     });
 }
 
-function deleteFunctionality(){
-    $("#downloadNotebookDiv div img.delete").on("click", function(event) {
-        console.log(event.target.id.split('-'));
-        var notebook = event.target.id.split('-')[0];
-        chrome.storage.sync.get(['notes'], function(result) {
-            var notes = result.notes;
-            console.log(notes);
-            delete notes[notebook];
-            console.log(notes);
-            chrome.storage.sync.set({notes: notes});
-            $("#downloadNotebookDiv").css("display", "none");
-        })
-    })
+async function deleteFunctionality() {
+    $("#downloadNotebookDiv div img.delete").on(
+        "click",
+        async function (event) {
+            console.log(event.target.id.split("-"));
+            var notebook = event.target.id.split("-")[0];
+            if (
+                window.confirm(
+                    `Are you sure you want to delete notebook - ${notebook}?`
+                )
+            ) {
+                await chrome.storage.sync.get(
+                    ["notes"],
+                    async function (result) {
+                        var notes = result.notes;
+                        console.log(notes);
+                        delete notes[notebook];
+                        console.log(notes);
+                        await chrome.storage.sync.set({ notes: notes });
+                        const r = await chrome.storage.sync.get(["notes"]);
+                        console.log(r);
+                        await $("#downloadNotebook").trigger("click");
+                    }
+                );
+            }
+        }
+    );
 }
 
 // display create notebook section on click create notebook button
@@ -171,7 +185,8 @@ $("#downloadNotebook").on("click", function () {
             $("#downloadNotebookDiv").html(container);
         } else {
             console.log("No notes found");
-            $("#noNotebooksFound").css("display", "block");
+            // $("#noNotebooksFound").css("display", "block");
+            $("#downloadNotebookDiv").css("display", "none");
         }
 
         $("#createNotebookDiv").css("display", "none");

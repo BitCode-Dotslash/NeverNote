@@ -258,14 +258,27 @@ async function displayMeaning(word) {
                 });
 
                 $("#extension #meaningDiv #meaningFound").html(meaningDiv);
-                $("#extension #meaningDiv #addToVocab").css("display", "block");
+                let dis = $("#extension #meaningDiv #addToVocabDone").css(
+                    "display"
+                );
+                if (dis === "none") {
+                    $("#extension #meaningDiv #addToVocab").css(
+                        "display",
+                        "block"
+                    );
+                } else {
+                    $("#extension #meaningDiv #addToVocab").css(
+                        "display",
+                        "none"
+                    );
+                }
                 chrome.storage.sync.set({ currentWord: currentWord });
             } else {
                 $("#extension #meaningDiv #meaningFound").css(
                     "display",
                     "none"
                 );
-                $("#extension #meaningDiv #addToVocab").css("display", "none");
+
                 $("#extension #meaningDiv #meaningNotFound").css(
                     "display",
                     "block"
@@ -296,6 +309,14 @@ function meaningButtonActivity(text) {
                         vocab.push(currentWord);
                         console.log(vocab);
                         await chrome.storage.sync.set({ vocab: vocab });
+                        $("#extension #meaningDiv #addToVocabDone").css(
+                            "display",
+                            "block"
+                        );
+                        $("#extension #meaningDiv #addToVocab").css(
+                            "display",
+                            "none"
+                        );
                     }
                 );
             });

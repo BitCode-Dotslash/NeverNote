@@ -26,7 +26,7 @@ Press ctrl key and select some word or sentence, as you finish your selection a 
 #### Translate functionality
 
 <p align="center">
-<img style="margin:10px" src="./images/preview/select-text.png" alt = "Select Text to get dialogue box"/>
+<img src="./images/preview/select-text.png" alt = "Select Text to get dialogue box"/>
 <p align="center">CTRL+Selecting Text triggers extension</p>
 </p>
 </br>
@@ -44,19 +44,54 @@ Press ctrl key and select some word or sentence, as you finish your selection a 
 </br>
 
 #### Search in Dictionary
+
+<p align="center">
 <img src="./images/preview/word1.png" alt="search for word in dictionary"></img>
+<p align="center">Search for word in dictionary</p>
+</p>
+</br>
 
 #### Popup
+
+<p align="center">
 <img src="./images/preview/popup1.png" alt="popup"/>
+<p align="center">Popup Layout</p>
+</p>
+</br>
+
+<p align="center">
 <img src="./images/preview/create-notebook.png" alt="create notebook"/>
+<p align="center">Create Notebook (name does not match any previous notebook)</p>
+</p>
+</br>
+
+<p align="center">
 <img src="./images/preview/create-notebook-with-same-name.png" alt="create notebook already existing notebook"/>
+<p align="center">Create Notebook (name matches with previous notebook)</p>
+</p>
+</br>
+
+<p align="center">
 <img src="./images/preview/manage-notebook.png" alt="manage notebook">
+<p align="center">Manage Notebooks</p>
+</p>
+</br>
 
 #### Vocabulary
+<p align="center">
 <img src="./images/preview/vocab.png" alt="vocabulary" />
+<p align="center">Vocabulary Page</p>
+</p>
+</br>
+
 
 #### Notes PDF
+<p align="center">
 <img src="./images/preview/notes.png" alt="notes">
+<p align="center">Downloaded notes layout</p>
+</p>
+</br>
+
 
 ## Installation
 
